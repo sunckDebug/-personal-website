@@ -1,0 +1,43 @@
+(function ($) {
+	$.fn.gothcnMenu = function (options) {
+		var $$ = $(this),
+		o = $.extend({
+			order: 'v',
+			arrow: false,//html, '&gt;' or '&raquo;'
+			autoWidth: true,
+			hasImages: false,
+			animation: {height: 'toggle', width: 'toggle'},//height: 'toggle' | width: 'toggle' | height: 'toggle', width: 'toggle'
+			extruderOpacity: {opacity: '0.9'},//show,toggle,0-1
+			speed: '600'//slow,fast,normal,millisecond
+		}, options);
+		$$.addClass('gothcn_menu_'+o.order);
+		if(o.arrow) {
+			$('ul', $$).find('li:has(ul)>a').append(o.arrow);
+		}
+		if(o.autoWidth) {
+			$('ul', $$).find('li').each(function() {
+				$(this).children('a').width($(this).parent('ul').width() + $(this).width() + $(this).children('a').width() - $(this).outerWidth(true) - $(this).children('a').outerWidth(true));
+			});
+			$$.find('ul').each(function() {
+				$(this).css({'width': $(this).width(), 'height': $(this).height()});
+			});
+		}
+		if(!$.browser.msie) $.extend(o.animation, o.extruderOpacity);
+		$$.find('li:has(ul)').hover(
+			function() {
+				if(!o.autoWidth || !$.browser.msie) {
+					$(this).children('ul').stop().hide().css('visibility','visible').animate(o.animation, o.speed);
+				} else {
+					$(this).children('ul').hide().css('visibility','visible').slideDown(o.speed);
+				}
+			},
+			function() {
+				if(!o.autoWidth || !$.browser.msie) {
+					$(this).children('ul').stop().removeAttr('style').css('visibility','hidden');
+				} else {
+					$(this).children('ul').css('visibility','hidden').slideUp(0);
+				}
+			}
+		);
+	};
+})(jQuery);

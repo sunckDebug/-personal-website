@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.jianshu.com/p/5880ae1cd595 -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="mobile-agent" content="format=html5;url=https://www.jianshu.com/p/5880ae1cd595">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description" content="最近需要使用https搭建一个api 故简单记录一下搭建过程 前言 有关https的原理 请参考图解HTTPS 环境搭建 一、 安装OpenSSL 1. OpenSSL 介绍OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。 SSL是Secure Sockets Layer（安全套接层协议）...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8">
+  <meta property="wb:webmaster" content="294ec9de89e7fadb">
+  <meta property="qc:admins" content="104102651453316562112116375">
+  <meta property="qc:admins" content="11635613706305617">
+  <meta property="qc:admins" content="1163561616621163056375">
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4">
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI">
+  <meta http-equiv="mobile-agent" content="format=html5; url=https://www.jianshu.com/p/5880ae1cd595">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/16900543">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="基于Tornado的HTTPS页面搭建笔记" property="twitter:title">
+  <meta content="最近需要使用https搭建一个api 故简单记录一下搭建过程 前言 有关https的原理 请参考图解HTTPS 环境搭建 一、 安装OpenSSL 1. OpenSSL 介绍..." property="twitter:description">
+  <meta content="https://www.jianshu.com/p/5880ae1cd595" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="基于Tornado的HTTPS页面搭建笔记">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jianshu.com/p/5880ae1cd595">
+  <meta property="og:description" content="最近需要使用https搭建一个api 故简单记录一下搭建过程 前言 有关https的原理 请参考图解HTTPS 环境搭建 一、 安装OpenSSL 1. OpenSSL 介绍OpenSSL 是一...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/16900543">
+  <meta property="al:ios:app_store_id" content="888237539">
+  <meta property="al:ios:app_name" content="简书">
+
+  <meta property="al:android:url" content="jianshu://notes/16900543">
+  <meta property="al:android:package" content="com.jianshu.haruki">
+  <meta property="al:android:app_name" content="简书">
+  <!-- End -->
+
+
+    <title>基于Tornado的HTTPS页面搭建笔记 - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="tyEMLqJQUYh4bYdEe95yCmN0tI0l31B71HhOVQfJ2Y84vhxA2WD4qQ4Yo3w5YnCbv3l7dBfe4/EkgY6uuUiXPQ==">
+
+  <link rel="stylesheet" media="all" href="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/web-d5108cec60c4ed55f041.css">
+  
+  <link rel="stylesheet" media="all" href="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/entry-f1bfe3a5bcbd20b68049.css">
+
+  <link href="https://cdn2.jianshu.io/assets/favicons/favicon-e743bfb1821442341c3ab15bdbe804f7ad97676bd07a770ccc9483473aa76f06.ico" rel="shortcut icon" type="image/x-icon">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/57-a6f1f1ee62ace44f6dc2f6a08575abd3c3b163288881c78dd8d75247682a4b27.png" sizes="57x57">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/72-fb9834bcfce738fd7b9c5e31363e79443e09a81a8e931170b58bc815387c1562.png" sizes="72x72">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/76-49d88e539ff2489475d603994988d871219141ecaa0b1a7a9a1914f4fe3182d6.png" sizes="76x76">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/114-24252fe693524ed3a9d0905e49bff3cbd0228f25a320aa09053c2ebb4955de97.png" sizes="114x114">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/120-1bb7371f5e87f93ce780a5f1a05ff1b176828ee0d1d130e768575918a2e05834.png" sizes="120x120">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/152-bf209460fc1c17bfd3e2b84c8e758bc11ca3e570fd411c3bbd84149b97453b99.png" sizes="152x152">
+
+  <!-- Start of 访问统计 -->
+    <script src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/push.js.下载"></script><script src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/hm.js.下载"></script><script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <!-- End of 访问统计 -->
+<style type="text/css">@charset "UTF-8";.image-package .image-container{position:relative;z-index:2;background-color:#eee;-webkit-transition:background-color .1s linear;-o-transition:background-color .1s linear;transition:background-color .1s linear;margin:0 auto}body.reader-night-mode .image-package .image-container{background-color:#545454}.image-package .image-container-fill{z-index:1}.image-package .image-container .image-view{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.image-package .image-container .image-view-error:after{content:"图片获取失败，请点击重试";position:absolute;top:50%;left:50%;width:100%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);color:#888;font-size:14px}.image-package .image-container .image-view img.image-loading{opacity:.3}.image-package .image-container .image-view img{-webkit-transition:all .15s linear;-o-transition:all .15s linear;transition:all .15s linear;z-index:2;opacity:1}</style><style type="text/css">fieldset[disabled] .multiselect {
+  pointer-events: none;
+}
+
+.multiselect__spinner {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 48px;
+  height: 35px;
+  background: #fff;
+  display: block;
+}
+
+.multiselect__spinner:after,
+.multiselect__spinner:before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border-color: #41b883 transparent transparent;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 0 0 0 1px transparent;
+}
+
+.multiselect__spinner:before {
+  animation: a 2.4s cubic-bezier(.41,.26,.2,.62);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__spinner:after {
+  animation: a 2.4s cubic-bezier(.51,.09,.21,.8);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__loading-enter-active,
+.multiselect__loading-leave-active {
+  transition: opacity .4s ease-in-out;
+  opacity: 1;
+}
+
+.multiselect__loading-enter,
+.multiselect__loading-leave-active {
+  opacity: 0;
+}
+
+.multiselect,
+.multiselect__input,
+.multiselect__single {
+  font-family: inherit;
+  font-size: 14px;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+.multiselect {
+  box-sizing: content-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  text-align: left;
+  color: #35495e;
+}
+
+.multiselect * {
+  box-sizing: border-box;
+}
+
+.multiselect:focus {
+  outline: none;
+}
+
+.multiselect--disabled {
+  opacity: .6;
+}
+
+.multiselect--active {
+  z-index: 1;
+}
+
+.multiselect--active:not(.multiselect--above) .multiselect__current,
+.multiselect--active:not(.multiselect--above) .multiselect__input,
+.multiselect--active:not(.multiselect--above) .multiselect__tags {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.multiselect--active .multiselect__select {
+  transform: rotate(180deg);
+}
+
+.multiselect--above.multiselect--active .multiselect__current,
+.multiselect--above.multiselect--active .multiselect__input,
+.multiselect--above.multiselect--active .multiselect__tags {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.multiselect__input,
+.multiselect__single {
+  position: relative;
+  display: inline-block;
+  min-height: 20px;
+  line-height: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0 0 5px;
+  width: 100%;
+  transition: border .1s ease;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  vertical-align: top;
+}
+
+.multiselect__tag~.multiselect__input,
+.multiselect__tag~.multiselect__single {
+  width: auto;
+}
+
+.multiselect__input:hover,
+.multiselect__single:hover {
+  border-color: #cfcfcf;
+}
+
+.multiselect__input:focus,
+.multiselect__single:focus {
+  border-color: #a8a8a8;
+  outline: none;
+}
+
+.multiselect__single {
+  padding-left: 6px;
+  margin-bottom: 8px;
+}
+
+.multiselect__tags-wrap {
+  display: inline;
+}
+
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 8px 40px 0 8px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+}
+
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 4px 26px 4px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: #fff;
+  line-height: 1;
+  background: #41b883;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+.multiselect__tag-icon {
+  cursor: pointer;
+  margin-left: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: 700;
+  font-style: normal;
+  width: 22px;
+  text-align: center;
+  line-height: 22px;
+  transition: all .2s ease;
+  border-radius: 5px;
+}
+
+.multiselect__tag-icon:after {
+  content: "\D7";
+  color: #266d4d;
+  font-size: 14px;
+}
+
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+  background: #369a6e;
+}
+
+.multiselect__tag-icon:focus:after,
+.multiselect__tag-icon:hover:after {
+  color: #fff;
+}
+
+.multiselect__current {
+  min-height: 40px;
+  overflow: hidden;
+  padding: 8px 12px 0;
+  padding-right: 30px;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+}
+
+.multiselect__current,
+.multiselect__select {
+  line-height: 16px;
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.multiselect__select {
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  right: 1px;
+  top: 1px;
+  padding: 4px 8px;
+  text-align: center;
+  transition: transform .2s ease;
+}
+
+.multiselect__select:before {
+  position: relative;
+  right: 0;
+  top: 65%;
+  color: #999;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #999 transparent transparent;
+  content: "";
+}
+
+.multiselect__placeholder {
+  color: #adadad;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+}
+
+.multiselect--active .multiselect__placeholder {
+  display: none;
+}
+
+.multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: #fff;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.multiselect__content {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-width: 100%;
+  vertical-align: top;
+}
+
+.multiselect--above .multiselect__content-wrapper {
+  bottom: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: none;
+  border-top: 1px solid #e8e8e8;
+}
+
+.multiselect__content::webkit-scrollbar {
+  display: none;
+}
+
+.multiselect__element {
+  display: block;
+}
+
+.multiselect__option {
+  display: block;
+  padding: 12px;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.multiselect__option:after {
+  top: 0;
+  right: 0;
+  position: absolute;
+  line-height: 40px;
+  padding-right: 12px;
+  padding-left: 20px;
+}
+
+.multiselect__option--highlight {
+  background: #41b883;
+  outline: none;
+  color: #fff;
+}
+
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #41b883;
+  color: #fff;
+}
+
+.multiselect__option--selected {
+  background: #f3f3f3;
+  color: #35495e;
+  font-weight: 700;
+}
+
+.multiselect__option--selected:after {
+  content: attr(data-selected);
+  color: silver;
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+  background: #ff6a6a;
+  color: #fff;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+  background: #ff6a6a;
+  content: attr(data-deselect);
+  color: #fff;
+}
+
+.multiselect--disabled {
+  background: #ededed;
+  pointer-events: none;
+}
+
+.multiselect--disabled .multiselect__current,
+.multiselect--disabled .multiselect__select,
+.multiselect__option--disabled {
+  background: #ededed;
+  color: #a6a6a6;
+}
+
+.multiselect__option--disabled {
+  cursor: text;
+  pointer-events: none;
+}
+
+.multiselect__option--disabled.multiselect__option--highlight {
+  background: #dedede!important;
+}
+
+.multiselect-enter-active,
+.multiselect-leave-active {
+  transition: all .15s ease;
+}
+
+.multiselect-enter,
+.multiselect-leave-active {
+  opacity: 0;
+}
+
+.multiselect__strong {
+  margin-bottom: 8px;
+  line-height: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+[dir=rtl] .multiselect {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__select {
+  right: auto;
+  left: 1px;
+}
+
+[dir=rtl] .multiselect__tags {
+  padding: 8px 8px 0 40px;
+}
+
+[dir=rtl] .multiselect__content {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__option:after {
+  right: auto;
+  left: 0;
+}
+
+[dir=rtl] .multiselect__clear {
+  right: auto;
+  left: 12px;
+}
+
+[dir=rtl] .multiselect__spinner {
+  right: auto;
+  left: 1px;
+}
+
+@keyframes a {
+  0% {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(2turn);
+  }
+}</style><style type="text/css">
+#free-reward-panel .reward-users-modal main {
+  padding: 0;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.reward-note-modal .v-modal {
+  width: 620px;
+  text-align: center;
+}
+.reward-note-modal .v-modal form {
+    margin: 0 auto 25px auto;
+    padding: 0 40px;
+}
+.reward-note-modal .v-modal .reward-intro {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.reward-note-modal .v-modal .reward-intro .avatar {
+      cursor: default !important;
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      display: inline-block;
+}
+.reward-note-modal .v-modal .reward-intro .intro {
+      margin-right: 5px;
+      font-weight: bold;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .reward-intro i {
+      color: #EA6F5A;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs {
+    margin: 25px 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group {
+      margin: 0 -5px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input {
+        display: none;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input:checked + .option {
+        color: #EA6F5A;
+        border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-text {
+        opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-amount-input {
+        opacity: 1;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option {
+        position: relative;
+        margin: 0 5px 15px;
+        width: 156px;
+        height: 56px;
+        line-height: 54px;
+        border: 1px solid #E6E6E6;
+        border-radius: 4px;
+        font-weight: normal;
+        color: #999999;
+        cursor: pointer;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option i {
+          font-size: 16px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .amount {
+          font-size: 28px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .piece {
+          font-size: 13px;
+          vertical-align: sub;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input {
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          width: 100%;
+          opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input i {
+            position: absolute;
+            top: 0;
+            left: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input .piece {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+            height: 54px;
+            line-height: 54px;
+            border: none;
+            font-size: 28px;
+            text-align: center;
+            background: transparent;
+            -moz-appearance: textfield;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-outer-spin-button, .reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-inner-spin-button {
+              -webkit-appearance: none !important;
+}
+.reward-note-modal .v-modal .main-inputs .message {
+      padding: 15px 20px;
+      margin-bottom: 0;
+      font-size: 14px;
+      border: 1px solid #E6E6E6;
+      color: #333333;
+      border-radius: 4px;
+      background-color: rgba(180, 180, 180, 0.1);
+}
+.reward-note-modal .v-modal .main-inputs .message textarea {
+        width: 100%;
+        height: 44px;
+        padding: 0;
+        margin: 0;
+        resize: none;
+        background: none !important;
+        border: none !important;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-box-shadow: none;
+                box-shadow: none;
+}
+.reward-note-modal .v-modal .main-inputs .message textarea:focus {
+          outline: none;
+}
+.reward-note-modal .v-modal .reward-info .amount {
+    font-size: 28px;
+    font-weight: bold;
+    color: #EA6F5A;
+}
+.reward-note-modal .v-modal .reward-info .pay-method {
+    font-size: 14px;
+}
+.reward-note-modal .v-modal .reward-info .pay-method a {
+      color: #3194D0;
+}
+.reward-note-modal .v-modal .choose-pay {
+    margin: 0 -5px;
+}
+.reward-note-modal .v-modal .choose-pay input {
+      display: none;
+}
+.reward-note-modal .v-modal .choose-pay input:checked + .option {
+      color: #EA6F5A;
+      border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .choose-pay .option {
+      margin: 20px 5px 10px;
+      width: 156px;
+      height: 56px;
+      line-height: 54px;
+      text-align: center;
+      border: 1px solid #E6E6E6;
+      border-radius: 4px;
+      cursor: pointer;
+}
+.reward-note-modal .v-modal .choose-pay .option img {
+        height: 30px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.alipay, .reward-note-modal .v-modal .choose-pay .option img.night.alipay {
+        min-width: 85px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.wechat, .reward-note-modal .v-modal .choose-pay .option img.night.wechat {
+        min-width: 112px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.night {
+        display: none;
+}
+.reward-note-modal .v-modal .choose-pay .tooltip {
+      width: 230px;
+}
+.reward-note-modal .v-modal .modal-footer {
+    padding: 0 15px 20px;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+.reward-note-modal .v-modal .modal-footer .btn {
+      padding: 8px 45px;
+      font-size: 24px;
+}
+.reward-note-modal .v-modal .btn-pay {
+    padding: 8px 25px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #F5A623;
+}
+.weixin-pay, .success-pay {
+  text-align: center;
+}
+.weixin-pay .v-modal, .success-pay .v-modal {
+    width: 350px;
+}
+.weixin-pay .ic-successed, .success-pay .ic-successed {
+    font-size: 60px;
+    color: #3db922;
+}
+.weixin-pay h2, .weixin-pay h3, .success-pay h2, .success-pay h3 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+.weixin-pay h2, .success-pay h2 {
+    margin: 0 0 40px 0;
+    font-size: 24px;
+}
+.weixin-pay .bind-text, .success-pay .bind-text {
+    position: relative;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #999999;
+}
+.weixin-pay .bind-text:before, .weixin-pay .bind-text:after, .success-pay .bind-text:before, .success-pay .bind-text:after {
+      content: "";
+      border-top: 1px solid #999;
+      display: block;
+      position: absolute;
+      width: 40px;
+      top: 8px;
+}
+.weixin-pay .bind-text:before, .success-pay .bind-text:before {
+      left: 30px;
+}
+.weixin-pay .bind-text:after, .success-pay .bind-text:after {
+      right: 30px;
+}
+.weixin-pay .share-bind, .success-pay .share-bind {
+    display: block;
+    margin-bottom: 30px;
+}
+.weixin-pay .share-bind i, .success-pay .share-bind i {
+      margin-right: 4px;
+      font-size: 22px;
+      vertical-align: middle;
+}
+.weixin-pay .share-bind.wechat i, .success-pay .share-bind.wechat i {
+      color: #00BB29;
+}
+.weixin-pay .share-bind.weibo i, .success-pay .share-bind.weibo i {
+      color: #E05244;
+}
+.weixin-pay .wx-qr-code, .success-pay .wx-qr-code {
+    display: inline-block;
+}
+.weixin-pay .wx-qr-code img, .success-pay .wx-qr-code img {
+      margin: 0 auto;
+      padding: 10px;
+      width: 200px;
+      background-color: #ffffff;
+}
+.weixin-pay .pay-amount, .success-pay .pay-amount {
+    margin: 20px 0;
+    color: #787878;
+}
+.weixin-pay .pay-amount span, .success-pay .pay-amount span {
+      color: #F5A623;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.v-modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: transparent;
+}
+.v-modal-wrap.modal-leave-active {
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+.v-modal-wrap.modal-enter-active .v-modal-mask, .v-modal-wrap.modal-leave-active .v-modal-mask {
+    opacity: 0;
+}
+.v-modal-wrap.modal-enter-active .v-modal, .v-modal-wrap.modal-leave-active .v-modal {
+    -webkit-transform: translate(-50%, -70%);
+        -ms-transform: translate(-50%, -70%);
+            transform: translate(-50%, -70%);
+    opacity: 0;
+}
+.v-modal-wrap .v-modal-mask {
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    opacity: 1;
+}
+.v-modal-wrap .v-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    -o-transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+    opacity: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    overflow: hidden;
+}
+.v-modal-wrap .v-modal > header:before, .v-modal-wrap .v-modal > header:after, .v-modal-wrap .v-modal > main:before, .v-modal-wrap .v-modal > main:after, .v-modal-wrap .v-modal > footer:before, .v-modal-wrap .v-modal > footer:after {
+      content: '';
+      clear: both;
+      display: table;
+}
+.v-modal-wrap .v-modal > header {
+      padding: 20px;
+      border-bottom: 1px solid #F0F0F0;
+}
+.v-modal-wrap .v-modal > header h4 {
+        margin: 0;
+        color: #333;
+        text-align: left;
+}
+.v-modal-wrap .v-modal .close {
+      position: absolute;
+      right: 16px;
+      top: 20px;
+      font-size: 26px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.8);
+}
+.v-modal-wrap .v-modal .close:hover {
+        color: #000000;
+}
+.v-modal-wrap .v-modal > main {
+      padding: 20px 20px 20px 20px;
+      font-size: 15px;
+      color: #333;
+      -webkit-box-flex: 1;
+      -webkit-flex-grow: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+}
+.v-modal-wrap .v-modal > footer {
+      padding: 20px;
+      background-color: #fff;
+}
+.v-modal-wrap .v-modal > footer button {
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        border: 0;
+        float: right;
+}
+.v-modal-wrap .v-modal > footer button:focus {
+          outline: 0;
+}
+.v-modal-wrap .v-modal > footer .submit {
+        padding: 4px 12px;
+        border: 1px solid;
+        border-radius: 20px;
+}
+.v-modal-wrap .v-modal > footer .cancel {
+        margin-top: 5px;
+}
+.v-modal-wrap .v-modal > footer .cancel:hover {
+          color: #333333;
+}
+.reader-night-mode .v-modal-wrap .v-modal-mask {
+  background-color: rgba(63, 63, 63, 0.7);
+}
+.reader-night-mode .v-modal-wrap .v-modal {
+  background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal header {
+    border-color: #2F2F2F;
+}
+.reader-night-mode .v-modal-wrap .v-modal header h4 {
+      color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close:hover {
+      color: #ffffff;
+}
+.reader-night-mode .v-modal-wrap .v-modal main {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer {
+    background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer .cancel:hover {
+      color: #C8C8C8;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.like[data-v-6ddd02c6] {
+  display: inline-block;
+}
+.like .like-group[data-v-6ddd02c6] {
+    position: relative;
+    padding: 13px 0 15px 0;
+    font-size: 0;
+    border: 1px solid #EA6F5A;
+    border-radius: 40px;
+}
+.like .like-group[data-v-6ddd02c6]:hover {
+      background-color: rgba(236, 97, 73, 0.05);
+}
+.like .like-group .btn-like[data-v-6ddd02c6] {
+      display: inline-block;
+      font-size: 19px;
+}
+.like .like-group .btn-like[data-v-6ddd02c6]:before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        top: 2px;
+        width: 50px;
+        height: 50px;
+        background-image: url(//cdn2.jianshu.io/assets/web/like_animation_steps-62a00a7b52377d3069927cdb8e61fd34.png);
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: 1000px 50px;
+}
+.like .like-group .btn-like a[data-v-6ddd02c6] {
+        position: relative;
+        padding: 18px 30px 18px 55px;
+        color: #EA6F5A;
+}
+.like .like-group .modal-wrap[data-v-6ddd02c6] {
+      font-size: 18px;
+      border-left: 1px solid rgba(236, 97, 73, 0.4);
+      display: inline-block;
+      margin-left: -15px;
+}
+.like .like-group .modal-wrap a[data-v-6ddd02c6] {
+        color: #EA6F5A;
+        padding: 18px 26px 18px 18px;
+}
+.like .like-group.like-animation[data-v-6ddd02c6], .like .like-group.active[data-v-6ddd02c6] {
+      background-color: #EA6F5A;
+}
+.like .like-group.like-animation .btn-like a[data-v-6ddd02c6], .like .like-group.active .btn-like a[data-v-6ddd02c6] {
+        color: white;
+}
+.like .like-group.like-animation .modal-wrap[data-v-6ddd02c6], .like .like-group.active .modal-wrap[data-v-6ddd02c6] {
+        border-left: 1px solid white;
+}
+.like .like-group.like-animation .modal-wrap a[data-v-6ddd02c6], .like .like-group.active .modal-wrap a[data-v-6ddd02c6] {
+          color: white;
+}
+.like .like-group.like-animation .btn-like[data-v-6ddd02c6]:before {
+      -webkit-animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+              animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+      background-position: right;
+}
+@-webkit-keyframes likeBlast {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+@keyframes likeBlast-data-v-6ddd02c6 {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+.like .like-group.active .btn-like[data-v-6ddd02c6]:before {
+      background-position: right;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.main {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 0 30px 0;
+  width: 620px;
+}
+.main .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.main .collection-settings {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    font-size: 13px;
+    color: #A0A0A0;
+}
+.main .collection-settings span {
+      padding-left: 4px;
+}
+.main .include-collection {
+    width: 100%;
+    padding-top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.main .include-collection .item {
+      display: inline-block;
+      margin: 0 12px 12px 0;
+      min-height: 32px;
+      background-color: white;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      vertical-align: top;
+      overflow: hidden;
+}
+.main .include-collection .item img {
+        width: 32px;
+        height: 32px;
+}
+.main .include-collection .item .name {
+        display: inline-block;
+        padding: 0 10px;
+        font-size: 14px;
+}
+.main .include-collection .add-collection-wrap {
+      margin: 0 12px 12px 0;
+}
+.main .include-collection .add-collection {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+}
+.main .include-collection .add-collection i {
+        margin-right: 4px;
+        color: #969696;
+}
+.main .recommend-note a {
+    position: relative;
+    margin: 20px 2px 0 0;
+    width: 200px;
+    height: 160px;
+    display: inline-block;
+}
+.main .recommend-note a:after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 160px;
+      border-radius: 0 0 4px 4px;
+      -webkit-box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+              box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
+      z-index: 1;
+}
+.main .recommend-note .name {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+.main .recommend-note .author {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.main .recommend-note .avatar {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.main .recommend-note .avatar img {
+      border-radius: 50%;
+}
+.main .recommend-note .author-name {
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: -1px;
+}
+.main .show-more {
+    margin: 0 12px 12px 0;
+    font-size: 14px;
+    color: #A0A0A0;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.recommend-note {
+  margin-bottom: 20px;
+}
+.recommend-note .meta, .recommend-note .list {
+    width: 620px;
+    margin: 0 auto;
+}
+.recommend-note .meta .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.recommend-note .meta .title .more {
+      float: right;
+      font-size: 14px;
+      color: #A0A0A0;
+}
+.recommend-note .list {
+    margin-top: 20px;
+}
+.recommend-note .list .note {
+      display: block;
+      margin-bottom: 25px;
+      padding: 0 0 25px 0;
+      border-bottom: 1px solid #DDDDDD;
+}
+.recommend-note .list .note.have-img {
+        min-height: 136px;
+}
+.recommend-note .list .note.have-img.no-user .description {
+          -webkit-line-clamp: 3;
+}
+.recommend-note .list .note .cover {
+        float: right;
+        margin: -5px 0 0 15px;
+        width: 150px;
+        height: 120px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 6px;
+}
+.recommend-note .list .note .title {
+        display: inherit;
+        margin-bottom: 4px;
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: bold;
+        color: #333333;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
+}
+.recommend-note .list .note .title:hover {
+          text-decoration: underline;
+}
+.recommend-note .list .note .title:visited {
+          color: #999999;
+}
+.recommend-note .list .note .description {
+        margin-bottom: 12px;
+        font-size: 13px;
+        line-height: 23px;
+        color: #333333;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+}
+.recommend-note .list .note .author .avatar {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-right: 3px;
+        border-radius: 50%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        vertical-align: middle;
+}
+.recommend-note .list .note .author .name {
+        font-size: 13px;
+        color: #333333;
+        vertical-align: middle;
+}
+</style><style type="text/css">
+#featured-comment-list {
+  margin-top: 30px;
+  margin-bottom: -15px;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.pc-bind-phone-modal .modal-content, .pc-bind-phone-modal .modal-body {
+  overflow: visible;
+}
+.pc-bind-phone-modal .modal-body {
+  padding-top: 14px;
+}
+.pc-bind-phone-modal .dropdown-menu {
+  max-height: 300px;
+  overflow: auto;
+}
+.pc-bind-phone-modal .dropdown-menu .tag {
+    background-color: #efefef;
+    color: #4A4A4A;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 25px;
+    font-size: 12px;
+}
+.pc-bind-phone-modal .tips {
+  color: #999999;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  margin-bottom: 14px;
+}
+.pc-bind-phone-modal .tips a {
+    color: #3194D0;
+}
+.reader-night-mode .pc-bind-phone-modal .dropdown-menu .tag {
+  background-color: #2F2F2F;
+  color: #999999;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.tips-card-loading[data-v-f3bf5228], .tips-card[data-v-f3bf5228] {
+  width: 460px;
+  position: relative;
+  left: 0;
+  top: 0;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #d9d9d9;
+}
+.tips-card-loading[data-v-f3bf5228] {
+  height: 200px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+.tips-card-loading div[data-v-f3bf5228] {
+    background-color: #EAEAEA;
+}
+.tips-card-loading .avatar[data-v-f3bf5228] {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 50%;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+.tips-card-loading .name[data-v-f3bf5228] {
+    width: 120px;
+    height: 20px;
+    position: absolute;
+    left: 110px;
+    top: 31px;
+}
+.tips-card-loading .content[data-v-f3bf5228] {
+    position: absolute;
+    left: 110px;
+    top: 62px;
+    width: 238px;
+    height: 39.2px;
+    background-color: transparent;
+}
+.tips-card-loading .content .text[data-v-f3bf5228], .tips-card-loading .content .text-delay[data-v-f3bf5228] {
+      height: 14px;
+      position: absolute;
+      left: 0;
+      width: 100%;
+}
+.tips-card-loading .content .text[data-v-f3bf5228] {
+      top: 2px;
+      -webkit-animation: loading-data-v-f3bf5228 1s ease-in-out infinite;
+      animation: loading-data-v-f3bf5228 1s ease-in-out infinite;
+}
+.tips-card-loading .content .text-delay[data-v-f3bf5228] {
+      bottom: 3px;
+      -webkit-animation: loading-data-v-f3bf5228 1s ease-in-out -0.5s infinite;
+      animation: loading-data-v-f3bf5228 1s ease-in-out -0.5s infinite;
+}
+@keyframes loading-data-v-f3bf5228 {
+0% {
+    width: 60%;
+}
+50% {
+    width: 100%;
+}
+100% {
+    width: 60%;
+}
+}
+@-webkit-keyframes loading {
+0% {
+    width: 60%;
+}
+50% {
+    width: 100%;
+}
+100% {
+    width: 60%;
+}
+}
+.tips-card-loading .meta[data-v-f3bf5228] {
+    width: 30px;
+    height: 42px;
+    position: absolute;
+    bottom: 20px;
+    background-color: transparent;
+}
+.tips-card-loading .meta.meta-1[data-v-f3bf5228] {
+      left: 30px;
+}
+.tips-card-loading .meta.meta-2[data-v-f3bf5228] {
+      left: 90px;
+}
+.tips-card-loading .meta.meta-3[data-v-f3bf5228] {
+      left: 150px;
+}
+.tips-card-loading .meta .count[data-v-f3bf5228], .tips-card-loading .meta .type[data-v-f3bf5228] {
+      position: absolute;
+}
+.tips-card-loading .meta .count[data-v-f3bf5228] {
+      left: -5px;
+      top: 6px;
+      height: 18px;
+      width: 40px;
+}
+.tips-card-loading .meta .type[data-v-f3bf5228] {
+      left: 1px;
+      bottom: 2px;
+      height: 13px;
+      width: 28px;
+}
+.tips-card-loading .button[data-v-f3bf5228] {
+    position: absolute;
+    bottom: 17px;
+    width: 90px;
+    height: 40px;
+    border-radius: 40px;
+}
+.tips-card-loading .message[data-v-f3bf5228] {
+    right: 120px;
+}
+.tips-card-loading .follow[data-v-f3bf5228] {
+    right: 17px;
+}
+.tips-card[data-v-f3bf5228] {
+  z-index: 10;
+}
+.tips-card .card-content[data-v-f3bf5228] {
+    padding: 20px 20px 0 20px;
+}
+.tips-card .card-content .summary[data-v-f3bf5228] {
+      padding: 8px 0 20px 90px;
+      min-height: 92px;
+      position: relative;
+}
+.tips-card .card-content .summary .avatar[data-v-f3bf5228] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 72px;
+        height: 72px;
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: #EAEAEA;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+}
+.tips-card .card-content .summary .name[data-v-f3bf5228] {
+        height: 26px;
+        margin-right: 3px;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -webkit-box-pack: start;
+        -webkit-justify-content: flex-start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+}
+.tips-card .card-content .summary .name .nickname[data-v-f3bf5228] {
+          color: #333333;
+          font-size: 19px;
+          font-weight: bold;
+          overflow: hidden;
+          -o-text-overflow: ellipsis;
+             text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+}
+.tips-card .card-content .summary .name .sex[data-v-f3bf5228], .tips-card .card-content .summary .name .badge[data-v-f3bf5228] {
+          -webkit-flex-shrink: 0;
+              -ms-flex-negative: 0;
+                  flex-shrink: 0;
+          display: inline-block;
+}
+.tips-card .card-content .summary .name .sex[data-v-f3bf5228] {
+          font-size: 19px;
+          width: 19px;
+          margin: 0 4px;
+}
+.tips-card .card-content .summary .intro[data-v-f3bf5228] {
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333333;
+}
+.tips-card .card-content .summary .intro.block[data-v-f3bf5228] {
+          color: #999999;
+}
+.tips-card .card-content .summary .list .item[data-v-f3bf5228] {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 13px;
+        color: #999999;
+        cursor: pointer;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
+}
+.tips-card .card-content .summary .list .item i[data-v-f3bf5228] {
+          margin-right: 2px;
+}
+.tips-card .card-footer[data-v-f3bf5228] {
+    border-top: 1px solid #F0F0F0;
+    padding: 15px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    overflow: hidden;
+    _zoom: 1;
+}
+.tips-card .card-footer .profile[data-v-f3bf5228] {
+      width: 198px;
+      overflow: hidden;
+      _zoom: 1;
+      float: left;
+}
+.tips-card .card-footer .profile div[data-v-f3bf5228] {
+        float: left;
+        width: 60px;
+        height: 44px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+}
+.tips-card .card-footer .profile div span[data-v-f3bf5228] {
+          display: block;
+          width: 100%;
+          text-align: center;
+}
+.tips-card .card-footer .profile div .type[data-v-f3bf5228] {
+          font-size: 13px;
+          color: #999999;
+}
+.tips-card .card-footer .profile div .count[data-v-f3bf5228] {
+          font-size: 18px;
+          color: #333333;
+}
+.tips-card .card-footer .social[data-v-f3bf5228] {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -webkit-box-pack: end;
+      -webkit-justify-content: flex-end;
+          -ms-flex-pack: end;
+              justify-content: flex-end;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
+      float: right;
+      overflow: hidden;
+      _zoom: 1;
+}
+.tips-card .card-footer .social .message[data-v-f3bf5228] {
+        border: 1px solid rgba(59, 194, 29, 0.7);
+        color: #42C02E;
+        margin: 0 10px 0 16px;
+        font-size: 15px;
+        padding: 8px 0;
+        width: 90px;
+        border-radius: 40px;
+        text-align: center;
+        cursor: pointer;
+        float: left;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+}
+.tips-card .card-footer .social .message[data-v-f3bf5228]:hover {
+          border: 1px solid #42C02E;
+          color: #42C02E;
+          background-color: rgba(59, 194, 29, 0.05);
+}
+.tips-card .card-footer .social .user-follow-button[data-v-f3bf5228] {
+        font-size: 15px;
+        padding: 8px 0;
+        width: 100px;
+}
+.arrow[data-v-f3bf5228] {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  left: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+.arrow i[data-v-f3bf5228] {
+    position: absolute;
+    left: 50%;
+    margin: 0;
+    margin-left: -10px;
+    border-width: 10px;
+    border-color: transparent;
+    padding: 0;
+}
+.arrow em[data-v-f3bf5228] {
+    display: block;
+    position: absolute;
+    left: -9px;
+    border-width: 9px;
+    border-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+.arrow-type-top[data-v-f3bf5228] {
+  bottom: 1px;
+}
+.arrow-type-top i[data-v-f3bf5228] {
+    border-top-color: #d9d9d9;
+    border-style: solid dashed dashed;
+    top: 0;
+}
+.arrow-type-top em[data-v-f3bf5228] {
+    border-style: solid dashed dashed;
+    border-top-color: #ffffff;
+    top: -10px;
+}
+.arrow-type-bottom[data-v-f3bf5228] {
+  top: 1px;
+}
+.arrow-type-bottom i[data-v-f3bf5228] {
+    border-bottom-color: #d9d9d9;
+    border-style: dashed dashed solid;
+    top: -10px;
+}
+.arrow-type-bottom em[data-v-f3bf5228] {
+    border-style: dashed dashed solid;
+    border-bottom-color: #ffffff;
+    top: -8px;
+}
+.reader-night-mode .tips-card-loading[data-v-f3bf5228] {
+  background-color: #3F3F3F;
+  border-color: #2F2F2F;
+}
+.reader-night-mode .tips-card-loading .avatar[data-v-f3bf5228], .reader-night-mode .tips-card-loading .name[data-v-f3bf5228], .reader-night-mode .tips-card-loading .text[data-v-f3bf5228], .reader-night-mode .tips-card-loading .text-delay[data-v-f3bf5228], .reader-night-mode .tips-card-loading .count[data-v-f3bf5228], .reader-night-mode .tips-card-loading .type[data-v-f3bf5228], .reader-night-mode .tips-card-loading .button[data-v-f3bf5228] {
+    background-color: #545454;
+}
+.reader-night-mode .tips-card[data-v-f3bf5228] {
+  background-color: #3F3F3F;
+  border-color: #2F2F2F;
+}
+.reader-night-mode .tips-card .card-content .summary .name .nickname[data-v-f3bf5228] {
+    color: #C8C8C8;
+}
+.reader-night-mode .tips-card .card-content .summary .name .nickname[data-v-f3bf5228]:hover {
+      color: #ffffff;
+}
+.reader-night-mode .tips-card .card-content .summary .intro[data-v-f3bf5228] {
+    color: #C8C8C8;
+}
+.reader-night-mode .tips-card .card-footer[data-v-f3bf5228] {
+    border-top-color: #2F2F2F;
+}
+.reader-night-mode .tips-card .card-footer .profile div .count[data-v-f3bf5228] {
+      color: #C8C8C8;
+}
+.reader-night-mode .arrow.arrow-type-top em[data-v-f3bf5228] {
+  border-top-color: #3F3F3F;
+}
+.reader-night-mode .arrow.arrow-type-top i[data-v-f3bf5228] {
+  border-top-color: #2F2F2F;
+}
+.reader-night-mode .arrow.arrow-type-bottom em[data-v-f3bf5228] {
+  border-bottom-color: #3F3F3F;
+}
+.reader-night-mode .arrow.arrow-type-bottom i[data-v-f3bf5228] {
+  border-bottom-color: #2F2F2F;
+}
+</style><style type="text/css">
+.v-tooltip-container,
+.v-tooltip-content {
+  display: inline-block;
+}
+.v-tooltip-container {
+  position: relative;
+}
+.v-tooltip-container .v-tooltip-content {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+.v-tooltip-container .v-tooltip-wrap {
+    position: absolute;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-top {
+      bottom: 100%;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+              transform: translateX(-50%);
+      padding-bottom: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-bottom {
+      top: 100%;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+              transform: translateX(-50%);
+      padding-top: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-left {
+      top: 50%;
+      right: 100%;
+      -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+      padding-right: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-right {
+      top: 50%;
+      left: 100%;
+      -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+      padding-left: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-top-start {
+      bottom: 100%;
+      left: 0;
+      padding-bottom: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-top-end {
+      bottom: 100%;
+      right: 0;
+      padding-bottom: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-bottom-start {
+      top: 100%;
+      left: 0;
+      padding-top: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-bottom-end {
+      top: 100%;
+      right: 0;
+      padding-top: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-left-start {
+      top: 0;
+      right: 100%;
+      padding-right: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-left-end {
+      bottom: 0;
+      right: 100%;
+      padding-right: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-right-start {
+      top: 0;
+      left: 100%;
+      padding-left: 10px;
+}
+.v-tooltip-container .v-tooltip-wrap.v-tooltip-wrap-right-end {
+      bottom: 0;
+      left: 100%;
+      padding-left: 10px;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.like-button[data-v-cdecbe24] {
+  position: relative;
+  padding-left: 23px;
+}
+.like-button[data-v-cdecbe24]:before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: -16px;
+    width: 50px;
+    height: 50px;
+    background-image: url(//cdn2.jianshu.io/assets/web/zan_animation_steps-8d65a474b670eb6a022516f4e0b8e9a4.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 1050px 50px;
+}
+.like-button[data-v-cdecbe24]:hover:before {
+    background-position: -50px;
+}
+.like-button.zan-animation span[data-v-cdecbe24], .like-button.active span[data-v-cdecbe24] {
+    color: #333333;
+}
+body.reader-night-mode .like-button.zan-animation span[data-v-cdecbe24], body.reader-night-mode .like-button.active span[data-v-cdecbe24] {
+      color: #C8C8C8;
+}
+.like-button.zan-animation[data-v-cdecbe24]:before {
+    -webkit-animation: likeBlast-data-v-cdecbe24 0.6s 1 steps(19);
+            animation: likeBlast-data-v-cdecbe24 0.6s 1 steps(19);
+    background-position: right;
+}
+@-webkit-keyframes likeBlast {
+0% {
+    background-position: -50px;
+}
+100% {
+    background-position: right;
+}
+}
+@keyframes likeBlast-data-v-cdecbe24 {
+0% {
+    background-position: -50px;
+}
+100% {
+    background-position: right;
+}
+}
+.like-button.active[data-v-cdecbe24]:before {
+    background-position: right;
+}
+</style></head>
+
+  <!-- 只给10%的用户添加代码 -->
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="https://www.jianshu.com/"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/nav-logo-4c7bbafe27adc892f3046e6978459bac.png" alt="Nav logo"></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="https://www.jianshu.com/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" id="sign_up" href="https://www.jianshu.com/sign_up">注册</a>
+      <a class="btn log-in" id="sign_in" href="https://www.jianshu.com/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div class="style-mode"><a class="style-mode-btn"><i class="iconfont ic-navigation-mode"></i></a> <div class="popover-modal" style="left: 0px; display: none;"><div class="meta"><i class="iconfont ic-navigation-night"></i><span>夜间模式</span></div> <div class="switch day-night-group"><a class="switch-btn">开</a> <a class="switch-btn active">关</a></div> <hr> <div class="switch font-family-group"><a class="switch-btn font-song">宋体</a> <a class="switch-btn font-hei active">黑体</a></div> <div class="switch"><a class="switch-btn active">简</a> <a class="switch-btn">繁</a></div></div></div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="tab ">
+              <a href="https://www.jianshu.com/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="tab ">
+              <a id="web-nav-app-download-btn" class="app-download-btn" href="https://www.jianshu.com/apps?utm_medium=desktop&amp;utm_source=navbar-apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="https://www.jianshu.com/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
+              <input type="text" name="q" id="q" value="" autocomplete="off" placeholder="搜索" class="search-input">
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+    <a target="_blank" href="https://www.jianshu.com/apps/redirect?utm_source=side-banner-click" id="web-note-ad-fixed"><span class="close">×</span></a>
+  <div class="post">
+    <div class="article">
+        <h1 class="title">基于Tornado的HTTPS页面搭建笔记</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="https://www.jianshu.com/u/75156f101757">
+            <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/61f72732-5d79-4fd9-ab91-b6cc12c05284" alt="96">
+</a>          <div class="info">
+            <span class="name"><a href="https://www.jianshu.com/u/75156f101757">卡尔是正太</a></span>
+            <!-- 关注用户按钮 -->
+            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于 2017.12.10 07:20">2017.09.10 10:40*</span>
+              <span class="wordage">字数 1145</span>
+            <span class="views-count">阅读 446</span><span class="comments-count">评论 3</span><span class="likes-count">喜欢 3</span></div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+
+        <!-- 文章内容 -->
+        <div data-note-content="" class="show-content">
+          <div class="show-content-free">
+            <p><em>最近需要使用https搭建一个api 故简单记录一下搭建过程</em></p>
+<h1>前言</h1>
+<p>有关https的原理 请参考<br>
+<a href="https://www.jianshu.com/p/f487b940d017" target="_blank">图解HTTPS</a></p>
+<h1>环境搭建</h1>
+<h4>一、 安装OpenSSL</h4>
+<p><strong>1. OpenSSL 介绍</strong><br>
+OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。</p>
+<p>SSL是Secure Sockets Layer（安全套接层协议）的缩写，可以在Internet上提供秘密性传输。SSL能使用户/服务器应用之间的通信不被攻击者窃听，并且始终对服务器进行认证，还可选择对用户进行认证。SSL协议要求建立在可靠的传输层协议(TCP)之上。</p>
+<p><strong>2. OpenSSL 安装</strong><br>
+安装Apache</p>
+<pre class="hljs ruby"><code class="ruby">$ sudo apt-get install apache2      
+</code></pre>
+<p>安装openssl</p>
+<pre class="hljs ruby"><code class="ruby">$ sudo apt-get install openssl      
+</code></pre>
+<p>安装openssl开发库</p>
+<pre class="hljs ruby"><code class="ruby">$ sudo apt-get install libssl-dev    
+</code></pre>
+<p>编辑器使用 bless 十六进制编辑器,需预先安装</p>
+<pre class="hljs ruby"><code class="ruby">$ sudo apt-get install bless      
+</code></pre>
+<p><strong>3. 获取 openssl.cnf</strong><br>
+去这个目录下 <code>/usr/lib/ssl/openssl.cnf</code> 拷贝出 <strong>openssl.cnf</strong><br>
+这是 openssl 的配置文件，下面生成证书及签名的时候 我们将用到这个文件<br>
+<em>可能不同的os 此文件的位置不同</em></p>
+<blockquote>
+<p><strong>openssl.cnf简单释义</strong><br>
+<code>vi /usr/lib/ssl/openssl.cnf</code><br>
+127 [ req_distinguished_name ]<br>
+128 countryName                    = Country Name (2 letter code)##国家名，2个字母代码简称<br>
+129 countryName_default            = CN  ##中国就是CN<br>
+130 countryName_min                = 2<br>
+131 countryName_max                = 2<br>
+132<br>
+133 stateOrProvinceName            = State or Province Name (full name)##州或省的名字<br>
+134 stateOrProvinceName_default    = beijing<br>
+135<br>
+136 localityName                    = Locality Name (eg, city)  ##本地城市名<br>
+137 localityName_default            =beijing<br>
+138 0.organizationName              = Organization Name (eg, company) ##组织(公司)名<br>
+139 0.organizationName_default      = beijing www company<br>
+140<br>
+145 organizationalUnitName          =Organizational Unit Name(eg,section)##组织单元(部门)名<br>
+146 organizationalUnitName_default  = www<br>
+147<br>
+148 commonName                      = Common Name(e.g.server FQDN or YOUR name)##服务器域名<br>
+149 commonName                      = <a href="https://link.jianshu.com/?t=http://www.baidu.com" target="_blank" rel="nofollow">www.baidu.com</a><br>
+150 commonName_max                  = 64<br>
+151<br>
+152 #emailAddress                  = Email Address      ##Email地址<br>
+153 emailAddress                    = <a href="https://link.jianshu.com/?t=mailto:admin@baidu.com" target="_blank" rel="nofollow">admin@baidu.com</a><br>
+154 emailAddress_max                = 64<br>
+155<br>
+156 # SET-ex3                      = SET extension number 3<br>
+157<br>
+158 [ req_attributes ]<br>
+159 #challengePassword              = A challenge password  ##修改密码<br>
+160 challengePassword              =<br>
+161<br>
+163 challengePassword_min          = 4<br>
+164 challengePassword_max          = 20</p>
+</blockquote>
+<h4>二、 安装Tornado</h4>
+<p>Tornado是目前python一个非常留下的非阻塞式服务器框架<br>
+若想了解更多，请参考<a href="https://link.jianshu.com/?t=http://www.tornadoweb.cn/documentation" target="_blank" rel="nofollow">【官方文档(中文版)】</a></p>
+<pre class="hljs undefined"><code>sudo pip install tornado
+</code></pre>
+<p>Tornado 本身支持 SSL ，所以我们这里需要做的主要是生成可用的证书。</p>
+<h3>三、生成证书</h3>
+<h3><strong>生成SSL证书</strong></h3>
+<p>首先要生成服务器端的私钥(key文件)</p>
+<pre class="hljs objectivec"><code class="objectivec">$ openssl genrsa -des3 -<span class="hljs-keyword">out</span> server.key <span class="hljs-number">1024</span>
+</code></pre>
+<blockquote>
+<p>运行时会提示输入密码,此密码用于加密key文件(参数des3便是指加密算法,当然也可以选用其他你认为安全的算法.),以后每当需读取此文件(通过openssl提供的命令或API)都需输入口令.如果觉得不方便,也可以去除这个口令,但一定要采取其他的保护措施!</p>
+</blockquote>
+<p>去除key文件口令的命令</p>
+<pre class="hljs objectivec"><code class="objectivec">$ openssl rsa -<span class="hljs-keyword">in</span> server.key -<span class="hljs-keyword">out</span> server.key
+</code></pre>
+<h4><strong>生成CSR文件</strong></h4>
+<p><em>将之前的openssl.cnf 拷贝到所需目录中</em></p>
+<pre class="hljs cpp"><code class="cpp">$ openssl req -<span class="hljs-keyword">new</span> -key server.key -out server.csr -config openssl.cnf
+</code></pre>
+<p>生成Certificate Signing Request（CSR）,生成的csr文件交给CA签名后形成服务端自己的证书.屏幕上将有提示,依照其指示一步一步输入要求的个人信息即可.</p>
+<p>对客户端也作同样的命令生成key及csr文件:</p>
+<pre class="hljs objectivec"><code class="objectivec">$ openssl genrsa -des3 -<span class="hljs-keyword">out</span> client.key <span class="hljs-number">1024</span>$ openssl req -new -key client.key -<span class="hljs-keyword">out</span> client.csr -config openssl.cnf
+</code></pre>
+<p>CSR文件必须有CA的签名才可形成证书.可将此文件发送到verisign等地方由它验证,要交一大笔钱,何不自己做CA呢.<br>
+在bin目录下新建目录 demoCA、demoCA/certs、demoCA/certs、demoCA/newcerts<br>
+在demoCA建立一个空文件 index.txt<br>
+在demoCA建立一个文本文件 serial, 没有扩展名，内容是一个合法的16进制数字，例如 0000</p>
+<pre class="hljs css"><code class="css"><span class="hljs-selector-tag">openssl</span> <span class="hljs-selector-tag">req</span> <span class="hljs-selector-tag">-new</span> <span class="hljs-selector-tag">-x509</span> <span class="hljs-selector-tag">-keyout</span> <span class="hljs-selector-tag">ca</span><span class="hljs-selector-class">.key</span> <span class="hljs-selector-tag">-out</span> <span class="hljs-selector-tag">ca</span><span class="hljs-selector-class">.crt</span> <span class="hljs-selector-tag">-config</span> <span class="hljs-selector-tag">openssl</span><span class="hljs-selector-class">.cnf</span>
+</code></pre>
+<p>用生成的CA的证书为刚才生成的server.csr,client.csr文件签名:</p>
+<pre class="hljs objectivec"><code class="objectivec">$ openssl ca -<span class="hljs-keyword">in</span> server.csr -<span class="hljs-keyword">out</span> server.crt -cert ca.crt -keyfile ca.key -config openssl.cnf$ openssl ca -<span class="hljs-keyword">in</span> client.csr -<span class="hljs-keyword">out</span> client.crt -cert ca.crt -keyfile ca.key -config openssl.cnf
+</code></pre>
+<p>ok,到了这里应该已经创建了可以使用的证书了，如果在为文件签名的时候有错误，那多半是信息不正确，这时可以去清空一下 index.txt 里的信息，然后重新执行第5步里失败的操作。</p>
+<h4><strong>在Tornado网站中开启HTTPS</strong></h4>
+<p>接着可以测试一下 tornado 使用 ssl 的证书了。<br>
+写个测试项目，其实也就一个py文件，像：</p>
+<pre class="hljs python"><code class="python"><span class="hljs-keyword">import</span> os.path
+
+<span class="hljs-keyword">from</span> tornado <span class="hljs-keyword">import</span> httpserver
+<span class="hljs-keyword">from</span> tornado <span class="hljs-keyword">import</span> ioloop
+<span class="hljs-keyword">from</span> tornado <span class="hljs-keyword">import</span> web
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestHandler</span><span class="hljs-params">(web.RequestHandler)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self)</span>:</span>
+        self.write(<span class="hljs-string">"Hello, World!"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>:</span>
+    settings = {
+        <span class="hljs-string">"static_path"</span>: os.path.join(os.path.dirname(__file__), <span class="hljs-string">"static"</span>),
+    }
+    application = web.Application([
+        (<span class="hljs-string">r"/"</span>, TestHandler),
+    ], **settings)
+    server = httpserver.HTTPServer(application, ssl_options={
+           <span class="hljs-string">"certfile"</span>: os.path.join(os.path.abspath(<span class="hljs-string">"."</span>), <span class="hljs-string">"server.crt"</span>),
+           <span class="hljs-string">"keyfile"</span>: os.path.join(os.path.abspath(<span class="hljs-string">"."</span>), <span class="hljs-string">"server.key"</span>),
+    })
+    server.listen(<span class="hljs-number">8000</span>)
+    ioloop.IOLoop.instance().start()
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    main()
+</code></pre>
+<p>然后把相关的证书扔到 py 文件的目录下。改成相应的名字。然后开启服务。<br>
+接着用使用 curl</p>
+<pre class="hljs cpp"><code class="cpp">curl -k https:<span class="hljs-comment">//localhost:8000</span>
+</code></pre>
+<p>看到请求返回的 Hello, World! 了么？恭喜你～你成功了～</p>
+<h3>后续、合成pem及导入证书</h3>
+<p><a href="https://link.jianshu.com/?t=http://zh.wikihow.com/%E5%AE%89%E8%A3%85SSL%E8%AF%81%E4%B9%A6" target="_blank" rel="nofollow">如何安装SSL证书</a><br>
+<a href="https://link.jianshu.com/?t=http://blog.csdn.net/jinchaoh/article/details/50014345" target="_blank" rel="nofollow">CURL使用SSL证书访问HTTPS</a></p>
+
+          </div>
+        </div>
+    </div>
+
+    <!-- 如果是付费文章，未购买，则显示购买按钮 -->
+
+    <!-- 连载目录项 -->
+
+    <!-- 如果是付费文章 -->
+      <!-- 如果是付费连载，已购买，且作者允许赞赏，则显示付费信息和赞赏 -->
+        <div id="free-reward-panel" class="support-author"><p>如果你喜欢我的文章，或许你可以请我喝一杯咖啡。</p> <div class="btn btn-pay">赞赏支持</div> <div class="supporter"><ul class="support-list"></ul> <!----></div> <!----> <!----></div>
+
+      <div class="show-foot">
+        <a class="notebook" href="https://www.jianshu.com/nb/11677578">
+          <i class="iconfont ic-search-notebook"></i>
+          <span>`13 的学习笔记</span>
+</a>        <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+          © 著作权归作者所有
+        </div>
+        <div class="modal-wrap" data-report-note="">
+          <a id="report-modal">举报文章</a>
+        </div>
+      </div>
+
+      <!-- 文章底部作者信息 -->
+        <div class="follow-detail">
+          <div class="info">
+            <a class="avatar" href="https://www.jianshu.com/u/75156f101757">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/61f72732-5d79-4fd9-ab91-b6cc12c05284" alt="96">
+</a>            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <a class="title" href="https://www.jianshu.com/u/75156f101757">卡尔是正太</a>
+              <i class="iconfont ic-man"></i>
+          <p>写了 119386 字，被 127 人关注，获得了 248 个喜欢</p></div>
+            <div class="signature">美好时光,只在昨日
+The Only Easy Day Was Yesterday</div>
+        </div>
+
+    <div class="meta-bottom">
+      <div data-v-6ddd02c6="" class="like"><div data-v-6ddd02c6="" class="btn like-group"><div data-v-6ddd02c6="" class="btn-like"><a data-v-6ddd02c6="">喜欢</a></div> <div data-v-6ddd02c6="" class="modal-wrap"><a data-v-6ddd02c6="">3</a></div></div> <!----></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-action="weibo-share" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;&#39;, &#39;推荐 @卡尔是正太 的文章《基于Tornado的HTTPS页面搭建笔记》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+        <a class="share-circle" data-toggle="tooltip" id="longshare" target="_blank" data-original-title="" title="">
+            <div class="qrcode" id="qrcode">
+             <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png" alt="Download index side qrcode">
+             <p>下载app生成长微博图片</p>
+             </div>
+          <i class="iconfont ic-picture"></i>
+        </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content="
+          &lt;ul class=&quot;share-list&quot;&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 卡尔是正太 的文章《基于Tornado的HTTPS页面搭建笔记》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-zone&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到QQ空间&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 卡尔是正太 的文章《基于Tornado的HTTPS页面搭建笔记》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-twitter&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Twitter&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-facebook&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Facebook&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-google&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Google+&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;基于Tornado的HTTPS页面搭建笔记&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-douban&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到豆瓣&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        " data-original-title="" title="">更多分享</a>
+      </div>
+    </div>
+      <a id="web-note-ad-1" target="_blank" href="https://www.jianshu.com/apps/redirect?utm_source=note-bottom-click"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/web-note-ad-1-c2e1746859dbf03abe49248893c9bea4.png" alt="Web note ad 1"></a>
+    <div><div id="comment-list" class="comment-list"><div><form class="new-comment"><a class="avatar"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png"></a> <div class="sign-container"><a href="https://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-comment-form" class="btn btn-sign">登录</a> <span>后发表评论</span></div></form> <!----></div> <!----> <div class="comments-placeholder" style="display: none;"><div class="author"><div class="avatar"></div> <div class="info"><div class="name"></div> <div class="meta"></div></div></div> <div class="text"></div> <div class="text animation-delay"></div> <div class="tool-group"><i class="iconfont ic-zan-active"></i><div class="zan"></div> <i class="iconfont ic-list-comments"></i><div class="zan"></div></div></div> <div id="normal-comment-list" class="normal-comment-list"><div><div><div class="top-title"><span>3条评论</span> <a class="author-only">只看作者</a> <a class="close-btn" style="display: none;">关闭评论</a> <div class="pull-right"><a class="active">按时间倒序</a><a class="">按时间正序</a></div></div></div> <!----> <!----> <div class="comments-placeholder" style="display: none;"><div class="author"><div class="avatar"></div> <div class="info"><div class="name"></div> <div class="meta"></div></div></div> <div class="text"></div> <div class="text animation-delay"></div> <div class="tool-group"><i class="iconfont ic-zan-active"></i><div class="zan"></div> <i class="iconfont ic-list-comments"></i><div class="zan"></div></div></div> <div id="comment-26902832" class="comment"><div><div class="author"><div data-v-f3bf5228="" class="v-tooltip-container" style="z-index: 0;"><div class="v-tooltip-content"><a href="https://www.jianshu.com/u/ab8f021be9ee" target="_blank" class="avatar"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/08d960b1e792.jpg"></a>  </div> <!----></div> <div class="info"><a href="https://www.jianshu.com/u/ab8f021be9ee" target="_blank" class="name">youfrweb</a> <!----> <!----> <div class="meta"><span>2楼 · 2018.07.31 13:51</span></div></div></div> <div class="comment-wrap"><p>请问安装了证书，chrome说是无效的，火狐倒是可以，查了一下是Chrome 58 及以上版本只会使用 subjectAlternativeName 扩展程序（而不是 commonName）来匹配域名和网站证书。可是还是没有解决，你有遇到这个问题吗？</p> <div class="tool-group"><a data-v-cdecbe24="" id="like-button-26902832" class="like-button"><span data-v-cdecbe24="">赞</span></a> <a class=""><i class="iconfont ic-comment"></i> <span>回复</span></a> <!----> <!----></div></div></div> <div class="sub-comment-list"><div id="comment-26942805" class="sub-comment"><p><div data-v-f3bf5228="" class="v-tooltip-container" style="z-index: 0;"><div class="v-tooltip-content"><a href="https://www.jianshu.com/u/75156f101757" target="_blank">卡尔是正太</a>：
+            </div> <!----></div> <span>嗯,遇到过,好像生成的证书要经过第三方CA认证chrome才会认,之前版本的chrome在第一次访问的时候会提示危险,但是点那个忽略继续访问就可以正常访问搭建的页面了,新版的chrome已经开始强制推行https了,如果你要做应用的话可以去找一下免费的https证书认证的服务,如果只是api的话service可以设置直接忽略检查证书 curl -k 就可以忽略证书内容,免费的https证书服务你可以再找一下</span></p> <div class="sub-tool-group"><span>2018.08.01 14:51</span> <a class=""><i class="iconfont ic-comment"></i> <span>回复</span></a> <!----> <!----></div></div><div id="comment-26945685" class="sub-comment"><p><div data-v-f3bf5228="" class="v-tooltip-container" style="z-index: 0;"><div class="v-tooltip-content"><a href="https://www.jianshu.com/u/ab8f021be9ee" target="_blank">youfrweb</a>：
+            </div> <!----></div> <span><a href="https://www.jianshu.com/u/75156f101757" class="maleskine-author" target="_blank" data-user-slug="75156f101757">@卡尔是正太</a> 感谢你的回复，我是自己做着测试一下，后来又做了一下证书，在openssl.cnf文件里面加了一些配置，添加上了使用者备用名称DNS，自己生成了一个CA做一下认证，使用localhost测试成功了，做了一下笔记，有时间的话请帮我看看有没有什么问题<a href="https://www.jianshu.com/p/acbf23f86880" rel="nofollow" target="_blank">https://www.jianshu.com/p/acbf23f86880</a></span></p> <div class="sub-tool-group"><span>2018.08.01 16:22</span> <a class=""><i class="iconfont ic-comment"></i> <span>回复</span></a> <!----> <!----></div></div> <div class="sub-comment more-comment"><a class="add-comment-btn"><i class="iconfont ic-subcomment"></i> <span>添加新评论</span></a> <!----> <!----> <!----></div> <!----></div></div></div></div> <!----> <div><!----></div></div></div>
+  </div>
+
+  <div class="side-tool"><ul><li data-placement="left" data-toggle="tooltip" data-container="body" data-original-title="回到顶部" style="display: none;"><a class="function-button"><i class="iconfont ic-backtop"></i></a></li> <!----> <!----> <!----> <li data-placement="left" data-toggle="tooltip" data-container="body" data-original-title="分享文章" id="share"><a tabindex="0" role="button" data-toggle="popover" data-placement="left" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content="&lt;ul class=&#39;share-list&#39; style=&quot;width:220px&quot;&gt;
+                  &lt;li&gt;&lt;a class=&quot;weixin-share&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-weixin&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到微信&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;&#39;, &#39;推荐 @卡尔是正太 的文章《基于Tornado的HTTPS页面搭建笔记》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-weibo&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到微博&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 卡尔是正太 的文章《基于Tornado的HTTPS页面搭建笔记》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-zone&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到QQ空间&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 卡尔是正太 的文章《基于Tornado的HTTPS页面搭建笔记》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-twitter&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Twitter&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-facebook&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Facebook&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-google&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Google+&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/5880ae1cd595?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;基于Tornado的HTTPS页面搭建笔记&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-douban&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到豆瓣&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;" data-original-title="" title="" class="function-button"><i class="iconfont ic-share"></i></a> <!----></li> <!----></ul></div>
+</div>
+<div class="note-bottom">
+  <div><div class="main"><div class="title">被以下专题收入，发现更多相似内容</div> <!----> <div class="include-collection"><!----> <a href="https://www.jianshu.com/c/NEt52a?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/computer_guy.jpg"><div class="name">程序员</div></a><a href="https://www.jianshu.com/c/83cce955658c?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/android.graphics.Bitmap_42bee9d0.jpeg"><div class="name">https</div></a><a href="https://www.jianshu.com/c/d135ecf1f70a?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/锁信息数字.jpg"><div class="name">SSL证书</div></a><a href="https://www.jianshu.com/c/1b1d3fc14191?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/1427795196.jpg"><div class="name">https</div></a> <!----></div></div> <!----> <!----></div>
+  <div><div class="recommend-note"><div class="meta"><div class="title">
+        推荐阅读
+        <a target="_blank" href="https://www.jianshu.com/" class="more">
+           更多精彩内容<i class="iconfont ic-link"></i></a></div></div> <div class="list"><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/e74499aec256?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/10918888-e538546263455a02.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240/format/webp&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/e74499aec256?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">最近不在线</a> <p class="description">简友们一个多月没来简书更新文章了，最近比较忙没时间写文章，过几天我尽量给大家更新几篇文章，谢谢大家一直以来的支持与喜欢。我就把最近比较艺术的照片给大家看看，增长增长人气吧嘿嘿！ 舍友拍的照片，希望大家喜欢，很专业哦，很好看的。最后祝大家国庆快乐，晚到的祝福，送给大家！ 作者：李晓钰 拍摄：舍友拍摄</p> <a target="_blank" href="https://www.jianshu.com/u/103bc45fdb72?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/10918888/6b1b1708-9f1e-4eb4-97ab-7e9540a76f34.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24/format/webp&quot;);"></div> <span class="name">shaye小玉</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/a6aaec79ace5?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/8599277-4d13ad372549bf30.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240/format/webp&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/a6aaec79ace5?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">我解剖了我自己</a> <p class="description">我解剖了我自己，暴露了深埋在躯体内萎缩的情商。 黑夜，月光扫描了我的肉体,把情商的骨架投射在墙壁上。白天，阳光吸吮着骨架,味道与空气混合成光芒。 嗅到味道的女人说:空气中散发着粗犷的浓香,闻到味道的男人说:空气中凝聚着阴柔的清香。 我不畏惧严寒酷暑地煎熬,在干枯的骨骼里有男人的倔强。我更羡慕春花秋月的浪漫,在脆弱的骨骼里有女人的柔肠。 我解剖了我自己，期待着倔强与温存携手走进天堂。 老树2018年10月8日</p> <a target="_blank" href="https://www.jianshu.com/u/63b7c5127afc?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/8599277/d50aee05-a62d-4d0c-afd6-a4d2ffd7a157.png?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24/format/webp&quot;);"></div> <span class="name">Old_tree</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/756730148a81?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/4460877-53ed65259bfc395a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240/format/webp&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/756730148a81?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">写文两年后，我成为了自己喜欢的模样</a> <p class="description">很久没有在简书写文章，但是在公众号还断断续续地更新着。 我也忘了哪天，突然间不在简书更文了。究其原因，一是我太在乎别人的看法，当时以恶意揣测我的人太多；二是因为发生了一些事情，对写文的人以及看文的人都产生了一个信仰崩塌。三是因为，我太忙了。 1. 人都有年轻的时候。我高考那年放下豪言要考上上海复旦大学，结果是来了上海没错，但却到了距离复旦几十公里的师范大学。 曾经刚来简书的时候我也想要成为一个大V，结果现在也渐渐在这个平台消失，甚至连以前的文章都设置为了私密。当初的豪言壮志，都成为了一个业余笑谈。 不过其实没关系，师范大学也挺好的，没有成为大V但却认识了一些可爱的读者也挺好的。 没有实现...</p> <a target="_blank" href="https://www.jianshu.com/u/1939c693d394?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/4460877/839d1e17-26b0-4e46-af59-8a5eea3926cb.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24/format/webp&quot;);"></div> <span class="name">微光隐隐</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/09421363141b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/12886078-392a127fa01b03b0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240/format/webp&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/09421363141b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">中秋月</a> <p class="description">秋水映寒月，枯枝起相思。 草尖凝白露，浮云阻断情。 情人诉别苦，红烛对对生。 年年今时日，此月故乡明。</p> <a target="_blank" href="https://www.jianshu.com/u/2fa892f5d613?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/12886078/d2889b26-376c-401c-a72e-96c8cecc120f.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24/format/webp&quot;);"></div> <span class="name">马骥北</span></a></div><div class="note have-img"><a target="_blank" href="https://www.jianshu.com/p/fc777f273249?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="cover" style="background-image: url(&quot;//upload-images.jianshu.io/upload_images/10395664-847f42c73e6ebb55.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240/format/webp&quot;);"></a> <a target="_blank" href="https://www.jianshu.com/p/fc777f273249?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="title">这一天</a> <p class="description">昨日突如其来的百把个喷嚏，今日终于被验证不是谁思念我至深，只是感冒来袭。 喷嚏过后，头晕目眩，终于熬不住，上床静养。等文先生去接了女儿回家。她一进门就嚷：“我妈呢？”十五岁的少年，到底还是孩子，还是习惯进门喊妈。 她立在我床边，兴奋地告诉我白天班队课又上台唱歌了，和谁一起，我没记住。我逗她：“最近很爱唱歌啊？” ”忙里偷闲，想唱就唱，放松放松。”她笑嘻嘻地说。 很欣慰她读高中后的状态，虽然总说听不懂，题不会做，精神风貌却极好。每日放学回家，还能跟我说说学校一天的生活。进门能安静坐在桌边订正错题，复习功课。 站在床边和我闲聊几句，她便去洗澡。出门时不忘跟我道晚安，顺手关灯关门。孩子出门后，...</p> <a target="_blank" href="https://www.jianshu.com/u/db2080d85a68?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=pc_all_hots&amp;utm_source=recommendation" class="author"><div class="avatar" style="background-image: url(&quot;//upload.jianshu.io/users/upload_avatars/10395664/87259582-ae95-4410-9917-a3ab8d2216e5.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/24/h/24/format/webp&quot;);"></div> <span class="name">影月琥</span></a></div></div> <div id="ff1230eb1f6c4125a7d815eea7d94914"></div></div></div>
+  <!-- 相关文章 -->
+  <div class="seo-recommended-notes">
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/2e69d56e470b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">OpenSSL</a>
+          <p class="description">原版：http://blog.csdn.net/jun2ran/article/details/6491375 第一章 前言第二章 证书第三章 加密算法第四章 协议第五章 入门第六章 指令 verify第七章 指令asn1parse第八章 指令CA（一）第九章 指令CA（二...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/c80bc26f12ed?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/ef91b64b-4ddd-4552-90d5-f4b0f403e456.jpg" alt="48">
+            </div>
+            <span class="name">依忆依意壹懿</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/6e7760934315?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/1855546-e6b12047f1e49cf6.png" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/6e7760934315?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">使用ssl自签证书搭建 Nodejs https 服务器, 并采用 AFNetworking ...</a>
+          <p class="description">使用 openssl 生成证书 openssl 说明: 使用 openssl 命令会把生成的证书输出到当前目录. 创建 CA 证书: 此证书是自签证书的根本, 创建了此证书相当于你自己就是第三方证书签发机构 (CA)了.生成步骤: 如果遇到权限问题 你需要root或者adm...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/198d870bc6fd?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/9c8867f4-dd1e-4da6-9f8e-7f705757b1a2.png" alt="48">
+            </div>
+            <span class="name">weineeL</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/cc6b804a4d80?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/6555561-4388f3ca2c162616.png" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/cc6b804a4d80?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">关于证书的那些事：自签名证书和私有CA签名证书等</a>
+          <p class="description">证书的三个作用   加密通信和身份验证（验证对方确实是对方声称的对象）和数据完整性（无法被修改，修改了会被知） 证书类型：x509的证书编码格式有两种1.PEM(Privacy-enhanced Electronic Mail) 是明文格式的  以 -----BEGIN C...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/78b4684e9045?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/fc98e08c-e023-43d2-8919-b2be2afe9f5a" alt="48">
+            </div>
+            <span class="name">SuperRoot</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/c9570bae0e61?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/1481822-93705b01db4aa924.png" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/c9570bae0e61?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">搭建docker内网私服（docker-registry with nginx&amp;ssl on ...</a>
+          <p class="description">主要思路： 1. Docker Registry 说明 关于如何创建和使用本地仓库，其实已经有很多文章介绍了。因为docker技术正处于发展和完善阶段，所以有些文章要么内容已经过时，要么给出了错误的配置，导致无法正常创建仓库。本文记录的是个人完整的搭建过程，docker v...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/0d360c509c41?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/37f01a9ebd82.jpg" alt="48">
+            </div>
+            <span class="name">威谷子</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/a8da9d39661c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">服务器HTTPS配置</a>
+          <p class="description">服务器https配置 配置https操作说明文档 1、查看服务器环境配置（tomcat和apache合并使用） 2、先链接服务器ssh -t root@ip 3、服务器Apache路径 ：/opt/gitlab-8.13.3-0/apache2 tomcat路径：/home...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/53f303844bd9?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/0f383d261997.jpg" alt="48">
+            </div>
+            <span class="name">南京杨小兵</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/bbb87ca11ce2?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">pm2--node.js服务管理工具使用说明</a>
+          <p class="description">安装 或者 启动进程 或者不同版本可以这样启动 --name 参数指定启动之后的进程名 查看所有进程 查看日志 查看指定进程的日志 重启服务 停止服务 删除服务 参数传递 例如下面的一个启动命令 改成pm2之后启动 所有v8引擎参数均应放到-node-args中，所有的脚本...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/6310f0435d0a?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/8fdf73d18d20.jpg" alt="48">
+            </div>
+            <span class="name">刘小胖LJX</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/10d854e2b96f?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">女孩，你要学会独处</a>
+          <p class="description">那句话说：孤单，是一个人的狂欢；狂欢，是一群人的孤单。所以，人生来就是孤单的。 朋友小A，虽然不算倾国倾城，但容貌还算过的去，性格又活泼，开朗，上学时学习成绩也还不错，这样的女生自然会受男生的倾慕。小A的父母都是公务员，家庭条件也不错，所以，她身边从不缺朋友，逢年过节时，家...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/268dad9a2ddd?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/cb86a0def7e7.jpg" alt="48">
+            </div>
+            <span class="name">婧儿Doris</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/8facf3ace4da?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">《琅琊榜》</a>
+          <p class="description">如今憔悴赋招魂，儒冠多误身 内容，易读；情感，易动    也看了几集电视剧。剧中添的几个细节方面，于原作，有过之而无不及。但人物的心理、计谋背后的深意，还得看看原作中的描写与揭露。看剧的也不细想了。 想到几句话: ‌弱者的策略是艰难的策略 ‌你要有足够的劣势，以至于你别无选...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/c6359ea7d13f?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/8-a356878e44b45ab268a3b0bbaaadeeb7.jpg" alt="48">
+            </div>
+            <span class="name">瑕疵被放大</span>
+</a>        </div>
+
+        <div class="note ">
+                    <a class="title" target="_blank" href="https://www.jianshu.com/p/bdc46056ef25?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">沉思</a>
+          <p class="description">这个社会真的越来越让我陷入沉思。你展示自己。别人说你装。你沉默不语。别人说你傻。请告诉我该怎样做人。该怎样做一个好人。不要以为多读一年书。就高人一等。想要被人尊重。首先先学学该怎样尊重别人。我能力有限。</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/fea4df60e4a3?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/b7d68d0a-9e4a-4618-8d1e-a23604ec784b.jpg" alt="48">
+            </div>
+            <span class="name">感官迷宫</span>
+</a>        </div>
+
+        <div class="note have-img">
+          <a class="cover" target="_blank" href="https://www.jianshu.com/p/4e806f1e7e7c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/6328896-2101c5965c1e4638.jpg" alt="240">
+</a>          <a class="title" target="_blank" href="https://www.jianshu.com/p/4e806f1e7e7c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">“遇见”八十岁的自己</a>
+          <p class="description">文/木一舟z 有一天，年轻的小欣坐着公交车去上班，望着车窗外的风景不断的停停、退退，停停、退退…… 迷迷糊糊中，她下了车。 栽满大树的路边，上午柔和的阳光下，她看见一位满头银发的八十岁左右的老婆婆，略弯着背蹒跚的在她前面走着。 她轻轻的走在老婆婆身边，表情木然的默默看着老婆...</p>
+          <a class="author" target="_blank" href="https://www.jianshu.com/u/d0bb428c96e2?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+            <div class="avatar">
+              <img src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/3bda7910-dee3-4140-b465-9ef8a9d3e115.jpg" alt="48">
+            </div>
+            <span class="name">木一舟z</span>
+</a>        </div>
+  </div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"windows","read_mode":"day","read_font":"font2","note_show":{"is_author":false,"is_following_author":false,"is_liked_note":false,"follow_state":0,"uuid":"e05a3c90-4728-44f4-b964-abebe885925d"},"note":{"id":16900543,"slug":"5880ae1cd595","user_id":5617720,"notebook_id":11677578,"commentable":true,"likes_count":3,"views_count":446,"public_wordage":1145,"comments_count":3,"featured_comments_count":0,"total_rewards_count":0,"is_author":false,"paid_type":"free","paid":false,"paid_content_accessible":false,"author":{"nickname":"卡尔是正太","total_wordage":119386,"followers_count":127,"total_likes_count":248}}}</script>
+    
+    <script src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/babel-polyfill-6cd2d6b53fe3184b71cc.js.下载" crossorigin="anonymous"></script>
+    <script src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/web-base-82ae9393c3b286c85c86.js.下载" crossorigin="anonymous"></script>
+<script src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/web-76d336f6332bfdd80e9d.js.下载" crossorigin="anonymous"></script>
+    
+    <script src="./基于Tornado的HTTPS页面搭建笔记 - 简书_files/entry-429c4cb17e5e3fb38b55.js.下载" crossorigin="anonymous"></script>
+    <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  
+
+<!----><!----></body></html>

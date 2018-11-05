@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查票</title>
+    <link rel="stylesheet" type="text/css" href="../../static/index-home1/fare/date_dropper/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="../../static/index-home1/fare/date_dropper/timedropper.min.css">
+    <link rel="stylesheet" type="text/css" media="all" href="../../static/index-home1/fare/css/tyle.css">
+	<script src="../../static/index-home1/fare/js/jquery-1.9.1.min.js"></script>
+</head>
+<style>
+    .shang{
+        height: 60px;background: linear-gradient(#FFFFFF,#E3E3E3);
+        background: linear-gradient(#FFFFFF,#E3E3E3 30%);
+        background: -webkit-linear-gradient(#FFFFFF,#E3E3E3 70%);
+        border-bottom:2px solid #478DCD;
+    }
+    .shang_dw1{width: 1100px;margin:0 auto;height: 10px;}
+    .shang_dw{width: 1100px;height: 40px;margin:0 auto;}
+    .shang_1{
+        font-size:25px;font-weight:bold;font-family:STSong;width: 800px;
+        float:left
+    }
+    .shang_2{
+        width: 300px;height: 50px;float:left;
+    }
+    .shang_button{
+        margin: 0;
+        padding: 0;
+        border: 1px solid transparent;
+        outline: none;
+        width: 80px;height: 40px;margin-left: 204px;
+        background-color: #FF8000;
+        border: none;
+        border-radius:5px;
+        color: #FFFFFF;
+    }
+
+    .xia{text-align:center;margin:0 auto}
+    .xia_1{
+        text-align:center;margin:0 auto;
+        width: 1100px;height: 80px;border: 1px solid #478DCD;
+        margin-top: 10px;
+    }
+    .xia_2{
+        text-align:center;margin:0 auto;
+        width: 1100px;height: 80px;border: 1px solid #478DCD;
+        margin-top: 10px;
+    }
+    .xia_3{
+        text-align:center;margin:0 auto;
+        width: 1100px;height: 60px;background-color: #478DCD;border: 1px solid #478DCD;
+        margin-top: 20px;
+    }
+    .xia_1,.xia_2,.xia_3{border-radius:5px}
+
+    #xia_1_1{
+        width: 100px; height: 70px;border-right: 1px solid #478DCD;float:left;margin-top: 5px;
+    }
+    #xia_1_2{
+        width: 800px; height: 70px;border-right: 1px solid #478DCD;float:left;margin-top: 5px;
+    }
+    #xia_1_3{
+        width: 100px; height: 70px;float:left;margin-top: 5px;
+    }
+    #xia_1_3{
+        width: 90px; height: 70px;float:left;margin-top: 5px;
+    }
+    
+    #radio_1,#radio_2{margin-left: 22px;margin-top: 13px;}
+    #radio_3,#radio_4{margin-left: 18px;margin-top: 13px;}
+
+    #place,#destination,#pickdate,#pickdate1{
+        margin-left: 20px;margin-top: 15px;
+        width: 150px;height: 30px;
+    }
+
+    #button{
+        width: 80px;height: 40px;margin-top: 20px;
+        background-color: #FF8000;
+        border: none;
+        border-radius:5px;
+        color: #FFFFFF;
+    }
+    #label{
+        margin-top: 30px;margin-left: 20px;
+    }
+    #checkbox_1,#checkbox_2,#checkbox_3,#checkbox_4,#checkbox_5{
+        margin-top: 30px;margin-left: 70px; 
+    }
+
+    .cc{
+        width: 64px;height: 60px;float:left;
+    }
+    .zj{
+        width: 81px;height: 60px;float:left;
+    }
+    .bz{
+        width: 64px;height: 60px;float:left;
+    }
+    #zt_shang_xia{
+        margin-top: 20px;color: #FFFFFF;
+        border-left:1px solid #2F74B3;
+        font-size: 15px;
+    }
+
+</style>
+<body>
+    <div class="shang">
+        <div class="shang_dw1"></div>
+        <div class="shang_dw">
+            <div class="shang_1">欢迎使用AID1807乐途查票</div>
+            <div class="shang_2">
+                <a href="../myweb/index.htm"><input type="button" value="返回" class="shang_button"></a>
+            </div>
+        </div> 
+    </div>
+    <div class="xia">
+        <div class="xia_1">
+            <form action="https://172.88.17.130:8888/query" method="post" id="fareForm">
+                <div id="xia_1_1">
+                    <input type="radio" name="double" id="radio_1" checked><label for='radio_1'>单程</label>
+                    <input type="radio" name="double" id="radio_2"><label for='radio_2'>返程</label>
+                </div>
+                <div id="xia_1_2">
+                    <input type="text" id="place" name="from_station" value="出发地" autocomplete="off">
+                    <input type="text" id="destination" name="to_station" value="到达地" autocomplete="off">
+                    <!-- 城市 -->
+                    <div id="in_city" style="display: none"></div>
+                    <input type="date" class="input" id="pickdate" name="querydate" value="出发时间" autocomplete="off"/>
+                    <input type="date" class="input" id="pickdate1" name="date" value="到达时间" autocomplete="off"/>
+                    
+                </div>
+                <div id="xia_1_3">
+                    <input type="radio" name="single" id="radio_3" checked><label for='radio_3'>普通</label>
+                    <input type="radio" name="single" id="radio_4"><label for='radio_4'>学生</label>
+                </div>
+                <div id="xia_1_4">
+                    <input type="submit" name="button" value="查询" id="button">
+                </div>
+            </form>
+        </div>
+        <div class="xia_2">
+            <label id="label_1"><b>车次类型: 全部</b></label>
+            <input type="checkbox" name="sex" id="checkbox_1"><label for='checkbox_1' >GC-高铁/城际</label>
+            <input type="checkbox" name="sex" id="checkbox_2"><label for='checkbox_2' >D-动车</label>
+            <input type="checkbox" name="sex" id="checkbox_3"><label for='checkbox_3' >T-特快</label>
+            <input type="checkbox" name="sex" id="checkbox_4"><label for='checkbox_4' >Z-快速</label>
+            <input type="checkbox" name="sex" id="checkbox_5"><label for='checkbox_5' >其他</label>
+        </div>
+        <div class="xia_3">
+            <div id="xia_3_1" class="cc"><div id="zt_shang_xia">车次</div></div>
+            <div id="xia_3_2" class="zj"><div id="zt_shang_xia">出发站</div></div>
+            <div id="xia_3_3" class="zj"><div id="zt_shang_xia">到达站</div></div>
+            <div id="xia_3_4" class="zj"><div id="zt_shang_xia">出发时间</div></div>
+            <div id="xia_3_5" class="zj"><div id="zt_shang_xia">到达时间</div></div>
+            <div id="xia_3_6" class="zj"><div id="zt_shang_xia">历时</div></div>
+            <div id="xia_3_7" class="zj"><div id="zt_shang_xia">特等座</div></div>
+            <div id="xia_3_8" class="zj"><div id="zt_shang_xia">一等座</div></div>
+            <div id="xia_3_9" class="zj"><div id="zt_shang_xia">二等座</div></div>
+            <div id="xia_3_10" class="zj"><div id="zt_shang_xia">硬座</div></div>
+            <div id="xia_3_11" class="zj"><div id="zt_shang_xia">软座</div></div>
+            <div id="xia_3_12" class="zj"><div id="zt_shang_xia">无座</div></div>
+            <div id="xia_3_13" class="zj"><div id="zt_shang_xia">其他</div></div>
+            <div id="xia_3_14" class="bz"><div id="zt_shang_xia">备注</div></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    document.write('<table style="background-color:aliceblue;margin:0px auto;font-family:宋体;color:#000;border:1px solid #B0CEDD;" cellspacing="0px">');
+    for (var i=0;i<data.length;i++){
+        document.write('<tr align="center">');
+        document.write("<td style='width: 59px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][3]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][6]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][7]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][8]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][9]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][10]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][32]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][31]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][30]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][25]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][24]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][23]+"</td>"+
+                       "<td style='width: 77px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][22]+"</td>"+
+                       "<td style='width: 59px;border:1px solid #B0CEDD;font-size:16px;'>"+data[i][22]+"</td>");
+        document.write("</tr>");
+        
+    }
+    document.write("</table>");
+    console.log(data);
+    //console.log(data[0][2]);
+    console.log(data.length);
+</script>
+<script type="text/javascript" src="../../static/index-home1/fare/js/cityTemplate.js"></script>
+	<script type="text/javascript">
+
+	    var cityA = $(".city_a_le1 a"); //城市
+	    var pla = $("#place");  //出发地
+	    var dest = $("#destination");  //目的地
+	    // 默认值
+	    inCity.width = "345";  //城市选择框  宽
+	    inCity.height = "auto";  //城市选择框  高
+	    inCity.id = "#in_city";  //城市选择框  父级ID
+	    inCity.Children = '.city_a_le1';  //城市名box
+	    // 初始化 城市HTML模板
+	    $(inCity.id).prepend(inCity._template.join(''));
+	    inCity.Hot(cityA);
+	    
+	    //城市 导航
+	    var apay = $(".screen a");
+
+	    var placeThis; //当前选择标签
+	    apay.click(function(obj){  //城市导航
+	        inCity.payment($(this));
+	    })
+
+	    inCity.place(pla); //出发地
+	    inCity.destination(dest);  //目的地
+	    inCity.cityClick(cityA); //显示赋值城市
+    </script>
+    
+    <script type="text/javascript" src="../../static/index-home1/fare/date_dropper/jquery-1.12.3.min.js"></script>
+    <script src="../../static/index-home1/fare/date_dropper/datedropper.min.js"></script>
+    <script src="../../static/index-home1/fare/date_dropper/timedropper.min.js"></script>
+    <script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y-m-d',
+        maxYear: '2020'
+    });
+    $("#pickdate1").dateDropper({
+        animate: false,
+        format: 'Y-m-d',
+        maxYear: '2020'
+    });
+    </script>
+</html>

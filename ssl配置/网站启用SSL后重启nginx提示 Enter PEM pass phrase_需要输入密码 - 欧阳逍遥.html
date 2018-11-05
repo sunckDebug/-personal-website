@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0031)https://blog.526net.com/?p=2702 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>  网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码 - 欧阳逍遥</title>
+<link href="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/jd.gallery.css" type="text/css">
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="https://blog.526net.com/?feed=rss2">
+<link rel="alternate" type="text/xml" title="RSS .92" href="https://blog.526net.com/?feed=rss">
+<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="https://blog.526net.com/?feed=atom">
+<meta name="generator" content="WordPress 3.0">
+	<link rel="archives" title="2018年十月" href="https://blog.526net.com/?m=201810">
+	<link rel="archives" title="2018年九月" href="https://blog.526net.com/?m=201809">
+	<link rel="archives" title="2018年八月" href="https://blog.526net.com/?m=201808">
+	<link rel="archives" title="2018年七月" href="https://blog.526net.com/?m=201807">
+	<link rel="archives" title="2018年六月" href="https://blog.526net.com/?m=201806">
+	<link rel="archives" title="2018年四月" href="https://blog.526net.com/?m=201804">
+	<link rel="archives" title="2018年三月" href="https://blog.526net.com/?m=201803">
+	<link rel="archives" title="2018年二月" href="https://blog.526net.com/?m=201802">
+	<link rel="archives" title="2018年一月" href="https://blog.526net.com/?m=201801">
+	<link rel="archives" title="2017年十二月" href="https://blog.526net.com/?m=201712">
+	<link rel="archives" title="2017年十一月" href="https://blog.526net.com/?m=201711">
+	<link rel="archives" title="2017年十月" href="https://blog.526net.com/?m=201710">
+	<link rel="archives" title="2017年九月" href="https://blog.526net.com/?m=201709">
+	<link rel="archives" title="2017年八月" href="https://blog.526net.com/?m=201708">
+	<link rel="archives" title="2017年七月" href="https://blog.526net.com/?m=201707">
+	<link rel="archives" title="2017年六月" href="https://blog.526net.com/?m=201706">
+	<link rel="archives" title="2017年五月" href="https://blog.526net.com/?m=201705">
+	<link rel="archives" title="2017年三月" href="https://blog.526net.com/?m=201703">
+	<link rel="archives" title="2017年二月" href="https://blog.526net.com/?m=201702">
+	<link rel="archives" title="2017年一月" href="https://blog.526net.com/?m=201701">
+	<link rel="archives" title="2016年十二月" href="https://blog.526net.com/?m=201612">
+	<link rel="archives" title="2016年十一月" href="https://blog.526net.com/?m=201611">
+	<link rel="archives" title="2016年九月" href="https://blog.526net.com/?m=201609">
+	<link rel="archives" title="2016年五月" href="https://blog.526net.com/?m=201605">
+	<link rel="archives" title="2016年四月" href="https://blog.526net.com/?m=201604">
+	<link rel="archives" title="2016年三月" href="https://blog.526net.com/?m=201603">
+	<link rel="archives" title="2015年十二月" href="https://blog.526net.com/?m=201512">
+	<link rel="archives" title="2015年十一月" href="https://blog.526net.com/?m=201511">
+	<link rel="archives" title="2015年十月" href="https://blog.526net.com/?m=201510">
+	<link rel="archives" title="2015年九月" href="https://blog.526net.com/?m=201509">
+	<link rel="archives" title="2015年八月" href="https://blog.526net.com/?m=201508">
+	<link rel="archives" title="2015年七月" href="https://blog.526net.com/?m=201507">
+	<link rel="archives" title="2015年六月" href="https://blog.526net.com/?m=201506">
+	<link rel="archives" title="2015年五月" href="https://blog.526net.com/?m=201505">
+	<link rel="archives" title="2015年四月" href="https://blog.526net.com/?m=201504">
+	<link rel="archives" title="2015年三月" href="https://blog.526net.com/?m=201503">
+	<link rel="archives" title="2015年二月" href="https://blog.526net.com/?m=201502">
+	<link rel="archives" title="2015年一月" href="https://blog.526net.com/?m=201501">
+	<link rel="archives" title="2014年十二月" href="https://blog.526net.com/?m=201412">
+	<link rel="archives" title="2014年十一月" href="https://blog.526net.com/?m=201411">
+	<link rel="archives" title="2014年十月" href="https://blog.526net.com/?m=201410">
+	<link rel="archives" title="2014年九月" href="https://blog.526net.com/?m=201409">
+	<link rel="archives" title="2014年八月" href="https://blog.526net.com/?m=201408">
+	<link rel="archives" title="2014年七月" href="https://blog.526net.com/?m=201407">
+	<link rel="archives" title="2014年六月" href="https://blog.526net.com/?m=201406">
+	<link rel="archives" title="2014年五月" href="https://blog.526net.com/?m=201405">
+	<link rel="archives" title="2014年四月" href="https://blog.526net.com/?m=201404">
+	<link rel="archives" title="2014年三月" href="https://blog.526net.com/?m=201403">
+	<link rel="archives" title="2014年二月" href="https://blog.526net.com/?m=201402">
+	<link rel="archives" title="2014年一月" href="https://blog.526net.com/?m=201401">
+	<link rel="archives" title="2013年九月" href="https://blog.526net.com/?m=201309">
+	<link rel="archives" title="2013年八月" href="https://blog.526net.com/?m=201308">
+	<link rel="archives" title="2013年六月" href="https://blog.526net.com/?m=201306">
+	<link rel="archives" title="2012年十二月" href="https://blog.526net.com/?m=201212">
+	<link rel="archives" title="2012年十一月" href="https://blog.526net.com/?m=201211">
+	<link rel="archives" title="2012年十月" href="https://blog.526net.com/?m=201210">
+	<link rel="archives" title="2012年九月" href="https://blog.526net.com/?m=201209">
+	<link rel="archives" title="2012年八月" href="https://blog.526net.com/?m=201208">
+	<link rel="archives" title="2012年七月" href="https://blog.526net.com/?m=201207">
+	<link rel="archives" title="2012年六月" href="https://blog.526net.com/?m=201206">
+	<link rel="archives" title="2012年五月" href="https://blog.526net.com/?m=201205">
+	<link rel="archives" title="2012年四月" href="https://blog.526net.com/?m=201204">
+	<link rel="archives" title="2012年三月" href="https://blog.526net.com/?m=201203">
+	<link rel="archives" title="2012年二月" href="https://blog.526net.com/?m=201202">
+	<link rel="archives" title="2012年一月" href="https://blog.526net.com/?m=201201">
+	<link rel="archives" title="2011年十二月" href="https://blog.526net.com/?m=201112">
+	<link rel="archives" title="2011年十一月" href="https://blog.526net.com/?m=201111">
+	<link rel="archives" title="2011年十月" href="https://blog.526net.com/?m=201110">
+	<link rel="archives" title="2011年九月" href="https://blog.526net.com/?m=201109">
+	<link rel="archives" title="2011年八月" href="https://blog.526net.com/?m=201108">
+	<link rel="archives" title="2011年七月" href="https://blog.526net.com/?m=201107">
+	<link rel="archives" title="2011年六月" href="https://blog.526net.com/?m=201106">
+	<link rel="archives" title="2011年五月" href="https://blog.526net.com/?m=201105">
+	<link rel="archives" title="2011年四月" href="https://blog.526net.com/?m=201104">
+	<link rel="archives" title="2011年三月" href="https://blog.526net.com/?m=201103">
+	<link rel="archives" title="2011年二月" href="https://blog.526net.com/?m=201102">
+	<link rel="archives" title="2011年一月" href="https://blog.526net.com/?m=201101">
+	<link rel="archives" title="2010年十二月" href="https://blog.526net.com/?m=201012">
+	<link rel="archives" title="2010年十一月" href="https://blog.526net.com/?m=201011">
+	<link rel="archives" title="2010年十月" href="https://blog.526net.com/?m=201010">
+	<link rel="archives" title="2010年九月" href="https://blog.526net.com/?m=201009">
+	<link rel="archives" title="2010年八月" href="https://blog.526net.com/?m=201008">
+	<link rel="archives" title="2010年七月" href="https://blog.526net.com/?m=201007">
+	<link rel="archives" title="2010年六月" href="https://blog.526net.com/?m=201006">
+	<link rel="archives" title="2010年五月" href="https://blog.526net.com/?m=201005">
+	<link rel="archives" title="2010年四月" href="https://blog.526net.com/?m=201004">
+	<link rel="archives" title="2010年三月" href="https://blog.526net.com/?m=201003">
+	<link rel="archives" title="2010年二月" href="https://blog.526net.com/?m=201002">
+	<link rel="archives" title="2010年一月" href="https://blog.526net.com/?m=201001">
+	<link rel="archives" title="2009年十二月" href="https://blog.526net.com/?m=200912">
+<link rel="alternate" type="application/rss+xml" title="欧阳逍遥 » 网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码 评论 Feed" href="https://blog.526net.com/?feed=rss2&amp;p=2702">
+<script type="text/javascript" src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/jquery.js.下载"></script>
+<script type="text/javascript" src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/jquery.gothcn.menu.js.下载"></script>
+<script type="text/javascript" src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/comment-reply.js.下载"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blog.526net.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blog.526net.com/wp-includes/wlwmanifest.xml"> 
+<link rel="index" title="欧阳逍遥" href="https://blog.526net.com/">
+<link rel="start" title="您好，世界！" href="https://blog.526net.com/?p=1">
+<link rel="prev" title="迅雷水晶手机客户端挂机全自动开宝箱python脚本" href="https://blog.526net.com/?p=2698">
+<link rel="next" title="迅雷红水晶 登陆失败提示验证挖矿资格失败" href="https://blog.526net.com/?p=2704">
+<meta name="generator" content="WordPress 3.0">
+<link rel="canonical" href="https://blog.526net.com/?p=2702">
+
+<script type="text/javascript">var AKPC_IDS = "";</script>
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<script type="text/javascript">
+(function($){
+	$(document).ready(function() {
+		$('.left>ul').gothcnMenu({
+			order: 'v',
+			arrow: ' &raquo;',//html, '&gt;' or '&raquo;'
+			autoWidth: true,
+			hasImages: false,
+			animation: {height: 'toggle', width: 'toggle'},//height: 'toggle' | width: 'toggle' | height: 'toggle', width: 'toggle'
+			extruderOpacity: {opacity: '0.9'},//show,toggle,0-1
+			speed: '600'//slow,fast,normal,millisecond
+		});
+		$('#nav>li>a').addClass('mouse_hover');
+		$('#nav').gothcnMenu({
+			order: 'v',
+			arrow: ' &raquo;',//html, '&gt;' or '&raquo;'
+			autoWidth: true,
+			hasImages: false,
+			animation: {height: 'toggle', width: 'toggle'},//height: 'toggle' | width: 'toggle' | height: 'toggle', width: 'toggle'
+			extruderOpacity: {opacity: '0.9'},//show,toggle,0-1
+			speed: '600'//slow,fast,normal,millisecond
+		});
+		$('.change_author_info').click(function() {
+			if($(this).hasClass('author_info_ishidden')) {
+				$(this).html('关闭 &raquo;').removeClass('author_info_ishidden');
+				$('#author_info').show();
+			} else {
+				$(this).html('更改 &raquo;').addClass('author_info_ishidden');
+				$('.cookie_author').html($('#author').val());
+				$('#author_info').hide();
+			}
+		});
+	});
+})(jQuery);
+</script>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="top_area">
+		<div id="top_area_content">
+			<div class="left">
+				<ul class="gothcn_menu_v">
+					<li id="page_item"><a href="https://blog.526net.com/" title="首页">首页</a></li>
+<li class="page_item page-item-2"><a href="https://blog.526net.com/?page_id=2" title="关于">关于</a></li>
+<li class="page_item page-item-2062"><a href="https://blog.526net.com/?page_id=2062" title="备查">备查</a></li>
+<li class="page_item page-item-348"><a href="https://blog.526net.com/?page_id=348" title="安全维护">安全维护</a></li>
+<li class="page_item page-item-344"><a href="https://blog.526net.com/?page_id=344" title="网站制作">网站制作</a></li>
+<li class="page_item page-item-339"><a href="https://blog.526net.com/?page_id=339" title="软件开发">软件开发</a></li>
+				</ul>
+			</div>
+			<div class="right">
+				<ul>
+					<li><a href="https://blog.526net.com/?feed=rss2">订阅帖子</a></li>
+					<li><a href="https://blog.526net.com/?feed=comments-rss2">订阅评论</a></li>
+									</ul>
+			</div>
+		</div>
+	</div>
+	<div id="header">
+		<div id="header_content">
+			<div id="logo">
+							<h1><a href="https://blog.526net.com/">欧阳逍遥<small>愚人博客</small></a></h1>
+						</div>
+			<div id="top_ads">
+				愚不是一种状态,愚是一种态度。			</div>
+			<div id="search_box">
+				<form action="https://blog.526net.com/" method="get">
+					<input name="s" id="s" alt="Search" class="inputbox" type="text" size="20" value="looking for something?" onblur="if(this.value==&#39;&#39;) this.value=&#39;looking for something?&#39;;" onfocus="if(this.value==&#39;looking for something?&#39;) this.value=&#39;&#39;;">
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="navigation_area">
+		<div id="navBody">
+		<ul id="nav" class="gothcn_menu_v">
+					<li id="page_item"><a href="https://blog.526net.com/" title="首页" class="mouse_hover">首页</a></li>
+	<li class="cat-item cat-item-3"><a href="https://blog.526net.com/?cat=3" title="查看 愚人愚语 下的所有文章" class="mouse_hover">愚人愚语</a>
+<ul class="children" style="width: 76px; height: 44px;">
+	<li class="cat-item cat-item-1"><a href="https://blog.526net.com/?cat=1" title="查看 未分类 下的所有文章" style="width: 36px;">未分类</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="https://blog.526net.com/?cat=55" title="查看 吐槽 下的所有文章" style="width: 36px;">吐槽</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.526net.com/?cat=4" title="查看 开发原地 下的所有文章" class="mouse_hover">开发原地</a>
+<ul class="children" style="width: 139px; height: 462px;">
+	<li class="cat-item cat-item-12"><a href="https://blog.526net.com/?cat=12" title="查看 php 下的所有文章" style="width: 99px;">php</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.526net.com/?cat=13" title="查看 asp 下的所有文章" style="width: 99px;">asp</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.526net.com/?cat=14" title="查看 aspx 下的所有文章" style="width: 99px;">aspx</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.526net.com/?cat=15" title="查看 c# 下的所有文章" style="width: 99px;">c#</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://blog.526net.com/?cat=16" title="查看 vb 下的所有文章" style="width: 99px;">vb</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="https://blog.526net.com/?cat=17" title="查看 服务器相关 下的所有文章" style="width: 99px;">服务器相关</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.526net.com/?cat=18" title="查看 DELPHI 下的所有文章" style="width: 99px;">DELPHI</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.526net.com/?cat=19" title="查看 Visual C++ 下的所有文章" style="width: 99px;">Visual C++</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.526net.com/?cat=20" title="查看 java script 下的所有文章" style="width: 99px;">java script</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.526net.com/?cat=21" title="查看 mysql 下的所有文章" style="width: 99px;">mysql</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.526net.com/?cat=22" title="查看 SQL 下的所有文章" style="width: 99px;">SQL</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.526net.com/?cat=23" title="查看 Flash 下的所有文章" style="width: 99px;">Flash</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.526net.com/?cat=24" title="查看 易语言 下的所有文章" style="width: 99px;">易语言</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://blog.526net.com/?cat=25" title="查看 外挂开发 下的所有文章" style="width: 99px;">外挂开发</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="https://blog.526net.com/?cat=26" title="查看 API 下的所有文章" style="width: 99px;">API</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="https://blog.526net.com/?cat=44" title="查看 HTML &amp; DIV+CSS 下的所有文章" style="width: 99px;">HTML &amp; DIV+CSS</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="https://blog.526net.com/?cat=52" title="查看 软件安装打包 下的所有文章" style="width: 99px;">软件安装打包</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="https://blog.526net.com/?cat=53" title="查看 JAVA &amp; Android 下的所有文章" style="width: 99px;">JAVA &amp; Android</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="https://blog.526net.com/?cat=56" title="查看 python 下的所有文章" style="width: 99px;">python</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="https://blog.526net.com/?cat=57" title="查看 kivy 下的所有文章" style="width: 99px;">kivy</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="https://blog.526net.com/?cat=58" title="查看 深度学习 下的所有文章" style="width: 99px;">深度学习</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.526net.com/?cat=5" title="查看 我的作品 下的所有文章" class="mouse_hover">我的作品</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.526net.com/?cat=7" title="查看 站长乐园 下的所有文章" class="mouse_hover">站长乐园</a>
+<ul class="children" style="width: 115px; height: 198px;">
+	<li class="cat-item cat-item-32"><a href="https://blog.526net.com/?cat=32" title="查看 站长资讯 下的所有文章" style="width: 75px;">站长资讯</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="https://blog.526net.com/?cat=33" title="查看 电脑常见问题 下的所有文章" style="width: 75px;">电脑常见问题</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="https://blog.526net.com/?cat=34" title="查看 SEO 下的所有文章" style="width: 75px;">SEO</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="https://blog.526net.com/?cat=35" title="查看 图片处理 下的所有文章" style="width: 75px;">图片处理</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="https://blog.526net.com/?cat=37" title="查看 CMS常见问题 下的所有文章" style="width: 75px;">CMS常见问题</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="https://blog.526net.com/?cat=38" title="查看 站长工具 下的所有文章" style="width: 75px;">站长工具</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="https://blog.526net.com/?cat=39" title="查看 域名空间资料 下的所有文章" style="width: 75px;">域名空间资料</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="https://blog.526net.com/?cat=40" title="查看 服务常见问题 下的所有文章" style="width: 75px;">服务常见问题</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="https://blog.526net.com/?cat=51" title="查看 linux 下的所有文章" style="width: 75px;">linux</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.526net.com/?cat=9" title="查看 休闲娱乐 下的所有文章" class="mouse_hover">休闲娱乐</a>
+<ul class="children" style="width: 112px; height: 110px;">
+	<li class="cat-item cat-item-8"><a href="https://blog.526net.com/?cat=8" title="查看 音乐 下的所有文章" style="width: 72px;">音乐</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="https://blog.526net.com/?cat=36" title="查看 娱乐时间 下的所有文章" style="width: 72px;">娱乐时间</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://blog.526net.com/?cat=45" title="查看 奇门遁甲 下的所有文章" style="width: 72px;">奇门遁甲</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="https://blog.526net.com/?cat=48" title="查看 科技改变生活 下的所有文章" style="width: 72px;">科技改变生活</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="https://blog.526net.com/?cat=50" title="查看 美文转载 下的所有文章" style="width: 72px;">美文转载</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://blog.526net.com/?cat=10" title="查看 全是好东东 下的所有文章" class="mouse_hover">全是好东东</a>
+<ul class="children" style="width: 88px; height: 88px;">
+	<li class="cat-item cat-item-42"><a href="https://blog.526net.com/?cat=42" title="查看 精品软件 下的所有文章" style="width: 48px;">精品软件</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="https://blog.526net.com/?cat=43" title="查看 电子产品 下的所有文章" style="width: 48px;">电子产品</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="https://blog.526net.com/?cat=46" title="查看 域名 下的所有文章" style="width: 48px;">域名</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.526net.com/?cat=47" title="查看 主机 下的所有文章" style="width: 48px;">主机</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.526net.com/?cat=11" title="查看 网赚 下的所有文章" class="mouse_hover">网赚</a>
+<ul class="children" style="width: 88px; height: 44px;">
+	<li class="cat-item cat-item-41"><a href="https://blog.526net.com/?cat=41" title="查看 广告联盟 下的所有文章" style="width: 48px;">广告联盟</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="https://blog.526net.com/?cat=49" title="查看 挂机软件 下的所有文章" style="width: 48px;">挂机软件</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-27"><a href="https://blog.526net.com/?cat=27" title="查看 黑客技术 下的所有文章" class="mouse_hover">黑客技术</a>
+<ul class="children" style="width: 88px; height: 110px;">
+	<li class="cat-item cat-item-28"><a href="https://blog.526net.com/?cat=28" title="查看 免杀 下的所有文章" style="width: 48px;">免杀</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://blog.526net.com/?cat=29" title="查看 远程控制 下的所有文章" style="width: 48px;">远程控制</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://blog.526net.com/?cat=30" title="查看 最新漏洞 下的所有文章" style="width: 48px;">最新漏洞</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.526net.com/?cat=31" title="查看 软件破解 下的所有文章" style="width: 48px;">软件破解</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="https://blog.526net.com/?cat=54" title="查看 ios 下的所有文章" style="width: 48px;">ios</a>
+</li>
+</ul>
+</li>
+		</ul>
+		</div>
+	</div>
+	<div id="content_area">
+		<div id="content_area_content">
+			<div id="left_content">
+						<div class="fullbox" id="post-2702">
+				<div class="fullbox_header"></div>
+				<div class="fullbox_content">
+					<div class="breadcrumb"> 
+						<a href="https://blog.526net.com/" title="首页">首页</a> 
+						<img src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/arrow.png" alt=""> 
+						<a href="https://blog.526net.com/?cat=47" title="查看 主机 的全部文章" rel="category">主机</a> <a href="https://blog.526net.com/?cat=17" title="查看 服务器相关 的全部文章" rel="category">服务器相关</a> 
+						<img src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/arrow.png" alt=""> 
+						<a href="https://blog.526net.com/?p=2702" title="网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码">网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码</a>
+					</div>
+					<h1><a href="https://blog.526net.com/?p=2702" rel="bookmark" title="网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码">网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码</a></h1>
+					<div class="post_info">
+						<div class="post_info_left">发布于: 2015年01月28日 <a href="https://blog.526net.com/?author=1" title="由 欧阳逍遥 发表">欧阳逍遥</a></div>
+						<div class="post_info_edit"></div>
+						<div class="post_info_right"> 
+							<a href="https://blog.526net.com/?p=2702#respond" class="post_comment">没有评论</a>
+						</div>
+					</div>
+					<div class="post_content">
+						<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">​最近在玩 STARTSSL 感觉个人站点使用这个SSL差不多也够用了。真正商用的SSL当然也可以自行购买。</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">我个人是为了防止数据中间被抓走,所以用了startssl 也基本就够用了。</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">
+&nbsp;</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">转回正题,startssl生成证书后,放到配置文件中，重启每次卡在Enter PEM pass phrase:需要输入密码</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">这很不方便，</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">网上流传办法：</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">这种情况可能是在设置私钥key时将密码设置写入了key文件，导致Nginx/Apache等系列服务器在启动时要求Enter PEM pass phrase。我们需要做的是剥离这个密码，利用如下OpenSSL命令生成server.key.unsecure文件：<br>
+openssl rsa -in server.key -out server.key.unsecure<br>
+​如果server.key.unsecure生成成功，我们就修改Nginx配置，比如像下面这样：</p>
+<p># 这里是SSL的相关配置<br>
+server {<br>
+&nbsp; listen 443;<br>
+&nbsp; server_name www.example.com; # 你自己的域名<br>
+&nbsp; root /home/www;<br>
+&nbsp; ssl on;<br>
+&nbsp; ssl_certificate /etc/nginx/certs/server.crt;<br>
+&nbsp; # 修改下面这一行指向我们生成的server.key.unsecure文件<br>
+&nbsp; ssl_certificate_key /etc/nginx/certs/server.key.unsecure;<br>
+}<br>
+然后使用/etc/init.d/nginx restart重启Nginx，是不是发现不再提示了，整个世界清净了吧:-)</p>
+<p>
+有些童鞋可能苦于VPS的配置，精简掉了OpenSSL，从而没有openssl命令，那怎么办呢？你可以不在服务器上做这个操作，把原先的key文件下载到本地客户端，然后再openssl吧。什么？Windows怎么办？没关系，Windows下有<a href="http://gnuwin32.sourceforge.net/packages/openssl.htm" target="_blank" data-ke-src="http://gnuwin32.sourceforge.net/packages/openssl.htm">OpenSSL for Windows</a>，没有的童鞋赶紧下载下来使用吧。<br>
+​<br>
+&nbsp;</p>
+<p style="text-transform: none; text-indent: 0px; margin: 5px 0px; font: 12px/18px &#39;sans serif&#39;, tahoma, verdana, helvetica; word-wrap: break-word; white-space: normal; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px">我使用startsll 他控制面板自带了解密工具。<b>Tool Box -&gt;&nbsp;</b><b>​Decrypt Private Key &nbsp;</b>​输入之前生成的key和key的密码解密即可。</p>
+<script type="text/javascript">AKPC_IDS += "2702,";</script>					</div>
+					<div class="post_social_bookmark">
+						
+					</div>
+
+					<div class="post_tags">
+						标签： 					</div>
+				</div>
+								<div class="fullbox_footer"></div>
+			</div>
+			<div id="page-navigator">
+						</div>
+			<!-- comment area -->
+<div class="comment_area">
+	<div class="comment_top"></div>
+					<!-- If comments are open, but there are no comments. -->
+			<p class="nocomments">没有评论 to “网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码”</p>
+				<div class="comment_bottom"></div>
+</div>
+<!-- comment area -->
+		<div class="comments_page_nav">
+								</div>
+	<div class="fullbox_excerpt" id="respond">
+		<div class="fullbox_content_comment">
+			<h3 class="title">留下评论：</h3>
+			<div id="cancel-comment-reply"> 
+				<p><a rel="nofollow" id="cancel-comment-reply-link" href="https://blog.526net.com/?p=2702#respond" style="display:none;">点击这里取消回复</a></p>
+			</div>
+							<form action="https://blog.526net.com/wp-comments-post.php" method="post" id="commentform">
+					<div class="excerpt_meta">
+						<div class="comment_form">
+							
+																							<div id="author_info" style="display:;">
+								<div class="form_text_label">昵称(必须)：</div>
+								<div>
+									<input name="author" type="text" id="author" tabindex="1" value="" class="text_area_style">
+								</div>
+								<div class="form_text_label">邮箱地址 (不会被公开) (必须)：</div>
+								<div>
+									<input type="text" name="email" id="email" value="" tabindex="2" class="text_area_style">
+								</div>
+								<div class="form_text_label">站点</div>
+								<div>
+									<input type="text" name="url" id="url" value="" tabindex="3" class="text_area_style">
+								</div>
+								</div>
+														<div class="form_text_label">评论 (必须)</div>
+							<div>
+								<textarea name="comment" id="comment" tabindex="4" class="text_area_style2"></textarea>
+							</div>
+						</div>
+						<div class="comment_form_instruction"> <strong>XHTML:</strong> 您可以使用这些标记： <code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code> </div>
+						<div class="comment_form_submit">
+							<input name="submit" type="submit" id="submit" tabindex="5" value="" class="submit_btn"><input type="hidden" name="comment_post_ID" value="2702" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+						</div>
+											</div>
+				</form>
+						
+		</div>
+		<div class="fullbox_footer"></div>
+	</div>
+			</div>
+<div id="sidebar">
+	<div id="sidebar_top" style="font-size:0;">
+				<div class="box">
+			<div class="box_header"></div>
+			<div class="box_content"><style>a{ TEXT-DECORATION:none}a:hover{TEXT-DECORATION:underline }</style>
+<a href="https://bandwagonhost.com/aff.php?aff=1611&amp;pid=19" title="bandwagonhost(搬瓦工) 3.99$年付" target="_blank">bandwagonhost(搬瓦工) 3.99$年付vps</a> 
+<br>
+<a href="https://www.526net.com/blog/ymzj/571.html" target="_blank">VPS 3.99$年付 4.99$年付 5.99$年付</a>
+<br>
+<a href="https://www.526net.com/blog/qita/570.html" title="3.99$/年翻墙上gmail教程" target="_blank">使用3.99$/年vps翻墙上gmail教程</a> 
+<br></div>
+			<div class="box_bottom"></div>
+		</div>
+		<div class="box">		<h3>最近文章</h3><div class="box_content">		<ul>
+				<li><a href="https://blog.526net.com/?p=3302" title="Windows Server 2008 R2 至少免费使用 900天">Windows Server 2008 R2 至少免费使用 900天</a></li>
+				<li><a href="https://blog.526net.com/?p=3300" title="/etc/X11/xinit/xserverrc: 3: exec: /usr/bin/X: not found">/etc/X11/xinit/xserverrc: 3: exec: /usr/bin/X: not found</a></li>
+				<li><a href="https://blog.526net.com/?p=3296" title="python 指定(绑定)出口IP 多线程">python 指定(绑定)出口IP 多线程</a></li>
+				<li><a href="https://blog.526net.com/?p=3294" title="Ubuntu 16.04 添加多条ipv6地址">Ubuntu 16.04 添加多条ipv6地址</a></li>
+				<li><a href="https://blog.526net.com/?p=3288" title="Kivy for android webview 加载显示非全屏浏览器（控件化）">Kivy for android webview 加载显示非全屏浏览器（控件化）</a></li>
+				<li><a href="https://blog.526net.com/?p=3285" title="kivy 使用webview加载网页">kivy 使用webview加载网页</a></li>
+				<li><a href="https://blog.526net.com/?p=3283" title="使用python开发android应用程序：第四节 使用WebView制作程序界面">使用python开发android应用程序：第四节 使用WebView制作程序界面</a></li>
+				<li><a href="https://blog.526net.com/?p=3281" title="Kivy windows 运行下报错 Unable to get a Window, abort.">Kivy windows 运行下报错 Unable to get a Window, abort.</a></li>
+				<li><a href="https://blog.526net.com/?p=3279" title="docker容器的导入导出">docker容器的导入导出</a></li>
+				<li><a href="https://blog.526net.com/?p=3274" title="acme.sh Dns 模式生成通配符证书">acme.sh Dns 模式生成通配符证书</a></li>
+				</ul>
+		</div><div class="box_bottom"></div></div><div class="box"><h3>最近评论</h3><div class="box_content"><ul id="recentcomments"><li class="recentcomments">繁星 在 <a href="https://blog.526net.com/?p=2890&amp;cpage=1#comment-31960">VPS管理面板Virtualizor介绍及破解</a> 上的评论</li><li class="recentcomments"><a href="http://www.526net.com/" rel="external nofollow" class="url">欧阳逍遥</a> 在 <a href="https://blog.526net.com/?p=2798&amp;cpage=1#comment-31957">phpStudy多版本PHP共存,不同站点运行使用不同版本PHP</a> 上的评论</li><li class="recentcomments"><a href="http://www.526net.com/" rel="external nofollow" class="url">欧阳逍遥</a> 在 <a href="https://blog.526net.com/?p=2798&amp;cpage=1#comment-31956">phpStudy多版本PHP共存,不同站点运行使用不同版本PHP</a> 上的评论</li><li class="recentcomments">slovent 在 <a href="https://blog.526net.com/?p=3072&amp;cpage=1#comment-31955">h5ai 中文目录及文件均为乱码404无法下载解决办法</a> 上的评论</li><li class="recentcomments">笨笨 在 <a href="https://blog.526net.com/?p=2798&amp;cpage=1#comment-31953">phpStudy多版本PHP共存,不同站点运行使用不同版本PHP</a> 上的评论</li></ul></div><div class="box_bottom"></div></div>	</div>
+	<div id="sidebar_left">
+			<div class="box">
+			<h3>分类目录</h3>
+			<div class="box_content">
+				<ul>
+						<li class="cat-item cat-item-9"><a href="https://blog.526net.com/?cat=9" title="查看 休闲娱乐 下的所有文章">休闲娱乐</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://blog.526net.com/?cat=10" title="查看 全是好东东 下的所有文章">全是好东东</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.526net.com/?cat=4" title="查看 开发原地 下的所有文章">开发原地</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.526net.com/?cat=3" title="查看 愚人愚语 下的所有文章">愚人愚语</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.526net.com/?cat=5" title="查看 我的作品 下的所有文章">我的作品</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.526net.com/?cat=7" title="查看 站长乐园 下的所有文章">站长乐园</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.526net.com/?cat=11" title="查看 网赚 下的所有文章">网赚</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="https://blog.526net.com/?cat=27" title="查看 黑客技术 下的所有文章">黑客技术</a>
+</li>
+				</ul>
+			</div>
+			<div class="box_bottom"></div>
+		</div>
+
+		<div class="box">
+			<h3>存档</h3>
+			<div class="box_content">
+				<ul>
+						<li><a href="https://blog.526net.com/?m=201810" title="2018年十月">2018年十月</a></li>
+	<li><a href="https://blog.526net.com/?m=201809" title="2018年九月">2018年九月</a></li>
+	<li><a href="https://blog.526net.com/?m=201808" title="2018年八月">2018年八月</a></li>
+	<li><a href="https://blog.526net.com/?m=201807" title="2018年七月">2018年七月</a></li>
+	<li><a href="https://blog.526net.com/?m=201806" title="2018年六月">2018年六月</a></li>
+	<li><a href="https://blog.526net.com/?m=201804" title="2018年四月">2018年四月</a></li>
+	<li><a href="https://blog.526net.com/?m=201803" title="2018年三月">2018年三月</a></li>
+	<li><a href="https://blog.526net.com/?m=201802" title="2018年二月">2018年二月</a></li>
+	<li><a href="https://blog.526net.com/?m=201801" title="2018年一月">2018年一月</a></li>
+	<li><a href="https://blog.526net.com/?m=201712" title="2017年十二月">2017年十二月</a></li>
+				</ul>
+			</div>
+			<div class="box_bottom"></div>
+		</div>
+		
+	</div>
+	<div id="sidebar_right">
+			<div class="box">
+			<h3>链接表</h3>
+			<div class="box_content">
+				<ul>
+					<li><a href="https://www.526net.com/" title="526互联提供双线虚拟主机,月付空间,季付空间,全能空间,域名注册,自助建站,全能代理平台.526互联是集多种IT业务为一体的多元化的专业开发团队。主营业务有:网站开发、软件开发、空间租用、域名出售、服务器租用、服务器托管、私服架设、大型企业ERP开发、OA开发。" target="_blank">526互联</a></li>
+				</ul>
+			</div>
+			<div class="box_bottom"></div>
+		</div>
+		
+		<div class="box">
+			<h3>功能</h3>
+			<div class="box_content">
+				<ul>
+							  <li><a href="https://blog.526net.com/wp-login.php">登录</a></li>
+		  <li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid XHTML</a></li>
+		  <li><a href="http://jigsaw.w3.org/css-validator/validator?uri=https://blog.526net.com&amp;usermedium=all">Valid CSS</a></li>
+		  <li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</a></li>
+		  				</ul>
+			</div>
+			<div class="box_bottom"></div>
+		</div>
+		</div>
+</div>
+</div>
+	</div>
+		<div id="footer_area">
+		<div id="footer_area_content">
+				<div class="box">
+					<div class="box_content">		<h3>最新文章</h3>		<ul>
+				<li><a href="https://blog.526net.com/?p=3302" title="Windows Server 2008 R2 至少免费使用 900天">Windows Server 2008 R2 至少免费使用 900天</a></li>
+				<li><a href="https://blog.526net.com/?p=3300" title="/etc/X11/xinit/xserverrc: 3: exec: /usr/bin/X: not found">/etc/X11/xinit/xserverrc: 3: exec: /usr/bin/X: not found</a></li>
+				<li><a href="https://blog.526net.com/?p=3296" title="python 指定(绑定)出口IP 多线程">python 指定(绑定)出口IP 多线程</a></li>
+				<li><a href="https://blog.526net.com/?p=3294" title="Ubuntu 16.04 添加多条ipv6地址">Ubuntu 16.04 添加多条ipv6地址</a></li>
+				<li><a href="https://blog.526net.com/?p=3288" title="Kivy for android webview 加载显示非全屏浏览器（控件化）">Kivy for android webview 加载显示非全屏浏览器（控件化）</a></li>
+				</ul>
+		</div>		</div>
+		
+		<div class="box">
+			<div class="box_content"><h3>最新评论</h3><ul id="recentcomments"><li class="recentcomments">繁星 在 <a href="https://blog.526net.com/?p=2890&amp;cpage=1#comment-31960">VPS管理面板Virtualizor介绍及破解</a> 上的评论</li><li class="recentcomments"><a href="http://www.526net.com/" rel="external nofollow" class="url">欧阳逍遥</a> 在 <a href="https://blog.526net.com/?p=2798&amp;cpage=1#comment-31957">phpStudy多版本PHP共存,不同站点运行使用不同版本PHP</a> 上的评论</li><li class="recentcomments"><a href="http://www.526net.com/" rel="external nofollow" class="url">欧阳逍遥</a> 在 <a href="https://blog.526net.com/?p=2798&amp;cpage=1#comment-31956">phpStudy多版本PHP共存,不同站点运行使用不同版本PHP</a> 上的评论</li><li class="recentcomments">slovent 在 <a href="https://blog.526net.com/?p=3072&amp;cpage=1#comment-31955">h5ai 中文目录及文件均为乱码404无法下载解决办法</a> 上的评论</li><li class="recentcomments">笨笨 在 <a href="https://blog.526net.com/?p=2798&amp;cpage=1#comment-31953">phpStudy多版本PHP共存,不同站点运行使用不同版本PHP</a> 上的评论</li></ul></div>		</div>
+		
+		<div class="box">
+			<h3>最受欢迎的帖子</h3>
+			<div class="box_content">
+								<ul>
+					<li><a href="https://blog.526net.com/?p=1975">AKCMS 标签大全</a></li><li><a href="https://blog.526net.com/?p=2520">VS2010编译VC++报错提示无法打开文件“libboost_thread-vc100-mt-gd-1_55.lib”等类似错误</a></li><li><a href="https://blog.526net.com/?p=2702">网站启用SSL后重启nginx提示 Enter PEM pass phrase:需要输入密码</a></li><li><a href="https://blog.526net.com/?p=1787">百家讲坛MP3批量打包下载</a></li><li><a href="https://blog.526net.com/?page_id=2">关于</a></li>				</ul>
+							</div>
+		</div>
+		<div class="box">
+		<h3>关于我们</h3>
+		<div class="box_content">
+		本博客为：欧阳逍遥 个人博客。		</div>
+		<div class="box_bottom"></div>
+		</div>
+				</div>   
+	</div>
+		<div id="footer_bottom">
+		<div id="footer_bottom_content">Copyright © 2018 <a href="https://blog.526net.com/">欧阳逍遥</a>. Powered by <a href="https://wordpress.org/" target="_blank">WordPress</a>. Techified theme revision by CheonNii. <script language="javascript" type="text/javascript" src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/f.txt"></script><a href="https://www.51.la/?comId=1997082" title="51.La 网站流量统计系统" target="_blank"><span style="display:inline-block;background-color:#FF7043;color:#fff;padding:2px 5px;font-family:arial;font-size:12px;font-weight:bold;">51La</span></a> <script src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/stat.php" language="JavaScript" charset="gb2312"></script><script src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/core.php" charset="utf-8" type="text/javascript"></script><a href="http://www.cnzz.com/stat/website.php?web_id=1227401" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./网站启用SSL后重启nginx提示 Enter PEM pass phrase_需要输入密码 - 欧阳逍遥_files/pic.gif"></a></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+jQuery(function() {
+	
+	jQuery.post("index.php",{ak_action:"api_record_view", ids: AKPC_IDS, type:"single"}, false, "json");
+});
+</script>
+	
+
+</body></html>

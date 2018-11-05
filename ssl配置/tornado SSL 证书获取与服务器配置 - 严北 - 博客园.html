@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://www.cnblogs.com/ityoung/p/8296088.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="origin">
+<title>tornado SSL 证书获取与服务器配置 - 严北 - 博客园</title>
+<meta property="og:description" content="转载注明出处: http://www.cnblogs.com/ityoung/p/8296088.html 自动化测试/持续集成/测试开发 QQ交流群: 70160503 服务端生成证书 进入 ope">
+<link type="text/css" rel="stylesheet" href="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/bundle-SimpleMemory.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/bundle-SimpleMemory-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/ityoung/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/ityoung/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/ityoung/wlwmanifest.xml">
+<script src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/f.txt"></script><script src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/pubads_impl_rendering_264.js.下载"></script><script async="" src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/analytics.js.下载"></script><script src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+<script type="text/javascript">var currentBlogApp = 'ityoung', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+<link rel="preload" href="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/f(1).txt" as="script"><script type="text/javascript" src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/f(1).txt"></script><script src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/pubads_impl_264.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-29/html/container.html"></head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="https://www.cnblogs.com/ityoung/"><img id="blogLogo" src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/ityoung/">严北的博客，微信公众号：devintest</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/ityoung/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E4%B8%A5%E5%8C%97">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/ityoung/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="https://www.cnblogs.com/ityoung/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 17&nbsp; </span>
+<span id="stats_article_count">文章 - 10&nbsp; </span>
+<span id="stats-comment_count">评论 - 0</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/ityoung/p/8296088.html">tornado SSL 证书获取与服务器配置</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown"><blockquote>
+<p>转载注明出处: <a href="http://www.cnblogs.com/ityoung/p/8296088.html" class="uri">http://www.cnblogs.com/ityoung/p/8296088.html</a><br>
+自动化测试/持续集成/测试开发 QQ交流群: 70160503</p>
+</blockquote>
+<h1 id="服务端生成证书">服务端生成证书</h1>
+<h3 id="进入-openssl-目录">进入 openssl 目录</h3>
+<p><code>$ cd /usr/lib/ssl</code></p>
+<h3 id="生成私钥">生成私钥</h3>
+<p><code>$ sudo&nbsp;openssl genrsa -des3 -out server.key 1024</code></p>
+<h3 id="生成-csr-文件">生成 CSR 文件</h3>
+<p><code>$ sudo&nbsp;openssl req -new -key server.key -out server.csr -config openssl.cnf</code></p>
+<p>其中必填项有:&nbsp;</p>
+<p>*&nbsp;Country Name (2 letter code) [AU]:</p>
+<p>*&nbsp;Common Name (e.g. server FQDN or YOUR name) []:</p>
+<h3 id="生成-ca-用于自签名">生成 CA (用于自签名)</h3>
+<ul>
+<li>新建demoCA, demoCA/certs, demoCA/newcerts</li>
+</ul>
+<p><code>$ sudo mkdir demoCA&nbsp;demoCA/certs demoCA/newcerts</code></p>
+<ul>
+<li><p>在 demoCAm 目录下新建空文件 index.txt</p></li>
+<li><p>在 demoCAm 目录下新建文件 serial, 内容是一个合法的 16 进制数字, 例如 0000</p></li>
+<li><p>返回 /usr/lib/ssl 目录, 执行如下命令生成 CA</p></li>
+</ul>
+<p><code>$ sudo&nbsp;openssl req -new -x509 -keyout ca.key -out ca.crt -config openssl.cnf</code></p>
+<p>其中必填项有:&nbsp;</p>
+<p>*&nbsp;Country Name (2 letter code) [AU]:</p>
+<p>*&nbsp;Common Name (e.g. server FQDN or YOUR name) []:</p>
+<h3 id="签名">签名</h3>
+<p><code>$ sudo&nbsp;openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key -config openssl.cnf</code></p>
+<blockquote>
+<p>转载注明出处: <a href="http://www.cnblogs.com/ityoung/p/8296088.html" class="uri">http://www.cnblogs.com/ityoung/p/8296088.html</a></p>
+</blockquote>
+<hr>
+<h1 id="tornado-启动时加上-ssl-选项">tornado 启动时加上 SSL 选项</h1>
+<ul>
+<li><p>复制证书文件到 tornado server 目录下(可选)</p></li>
+<li><p>修改测试服务器代码 test.py</p></li>
+</ul>
+<pre><code class="hljs python">
+<span class="hljs-keyword">import</span> tornado.ioloop
+<span class="hljs-keyword">import</span> tornado.web
+<span class="hljs-keyword">import</span> os
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestGetHandler</span><span class="hljs-params">(tornado.web.RequestHandler)</span>:</span>
+&nbsp;&nbsp;&nbsp; <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self)</span>:</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.write(<span class="hljs-string">"Hello, World!"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_app</span><span class="hljs-params">()</span>:</span>
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">return</span> tornado.web.Application([
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (<span class="hljs-string">r"/"</span>, TestGetHandler),
+&nbsp;&nbsp;&nbsp; ])
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+&nbsp;&nbsp;&nbsp; application = make_app()
+&nbsp;&nbsp;&nbsp; http_server = tornado.httpserver.HTTPServer(application, ssl_options={
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-string">"certfile"</span>: os.path.join(os.path.abspath(<span class="hljs-string">"."</span>), <span class="hljs-string">"server.crt"</span>),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-string">"keyfile"</span>: os.path.join(os.path.abspath(<span class="hljs-string">"."</span>), <span class="hljs-string">"server.key"</span>),
+&nbsp;&nbsp;&nbsp; })
+&nbsp;&nbsp;&nbsp; http_server.listen(<span class="hljs-number">443</span>)
+&nbsp;&nbsp;&nbsp; tornado.ioloop.IOLoop.instance().start()
+</code></pre>
+<ul>
+<li>由于端口号小于1000, 因此需要使用 su 权限的用户运行脚本</li>
+</ul>
+<p><code>$ sudo python test.py</code></p>
+<hr>
+<h1 id="客户端访问">客户端访问</h1>
+<h3 id="浏览器">浏览器</h3>
+<p>输入<code>https://localhost</code>直接访问</p>
+<h3 id="curl">CURL</h3>
+<p>添加 <code>-k</code> 选项忽略 SSL 验证, 如下:</p>
+<p><code>curl -k https://localhost</code></p>
+<h3 id="requests">requests</h3>
+<p>添加<code>verify=False</code>选项, 如下:</p>
+<p>requests.get(URL, <strong>verify=False</strong>)</p>
+<blockquote>
+<p>转载注明出处: <a href="http://www.cnblogs.com/ityoung/p/8296088.html" class="uri">http://www.cnblogs.com/ityoung/p/8296088.html</a></p>
+</blockquote>
+<hr>
+<h1 id="参考">参考</h1>
+<p>[1] 使用Tornado搭建HTTPS网站, yeolar, <a href="http://www.yeolar.com/note/2015/04/30/tornado-ssl-https/" class="uri">http://www.yeolar.com/note/2015/04/30/tornado-ssl-https/</a><br>
+[2] curl - 为什么不能识别自签名的SSL证书？, <a href="https://code.i-harness.com/zh-CN/q/10c8411" class="uri">https://code.i-harness.com/zh-CN/q/10c8411</a></p>
+<blockquote>
+<p>转载注明出处: <a href="http://www.cnblogs.com/ityoung/p/8296088.html" class="uri">http://www.cnblogs.com/ityoung/p/8296088.html</a></p>
+</blockquote>
+</div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="https://www.cnblogs.com/ityoung/category/1148883.html" target="_blank">tornado</a></div>
+<div id="EntryTag">标签: <a href="https://www.cnblogs.com/ityoung/tag/Tornado/">Tornado</a>, <a href="https://www.cnblogs.com/ityoung/tag/Python/">Python</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(8296088,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;9569d9bc-0377-e411-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/ityoung/" target="_blank"><img src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/20180812062431.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/ityoung/">严北</a><br>
+            <a href="http://home.cnblogs.com/u/ityoung/followees">关注 - 1</a><br>
+            <a href="http://home.cnblogs.com/u/ityoung/followers">粉丝 - 3</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;9569d9bc-0377-e411-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(8296088,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(8296088,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/ityoung/p/6489158.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/ityoung/p/6489158.html" title="发布于2017-03-02 10:10">Jenkins-Dingding Notification Plugin 配置</a><br><a href="https://www.cnblogs.com/ityoung/p/8406300.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/ityoung/p/8406300.html" title="发布于2018-02-02 18:32">Python - 用协程并发执行测试用例</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2018-01-16 13:27</span> <a href="https://www.cnblogs.com/ityoung/">严北</a> 阅读(<span id="post_view_count">741</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=8296088" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/ityoung/p/8296088.html#" onclick="AddToWz(8296088);return false;">收藏</a></div>
+	</div>
+	<script src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/highlight.min.js.下载"></script><script>markdown_highlight();</script><script type="text/javascript">var allowComments=true,cb_blogId=206733,cb_entryId=8296088,cb_blogApp=currentBlogApp,cb_blogUserGuid='9569d9bc-0377-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2018/1/16 13:27:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/ityoung/p/8296088.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/ityoung/p/8296088.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/609552/" target="_blank">腾讯AI Lab入选20篇论文，含2篇Spotlight</a><br> ·  <a href="https://news.cnblogs.com/n/609551/" target="_blank">鸿海在美招聘上千岗位 已有不少人在排队候补</a><br> ·  <a href="https://news.cnblogs.com/n/609550/" target="_blank">跟贴火爆15年后，网易要用“讲讲”来打造更低门槛的新闻社区</a><br> ·  <a href="https://news.cnblogs.com/n/609549/" target="_blank">中科院院士批奥数培训功利：已脱离数学教育思维本质</a><br> ·  <a href="https://news.cnblogs.com/n/609548/" target="_blank">大衰退十周年，全球经济将往何处去？</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<script async="async" src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/gpt.js.下载"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/1090369/C2', [468, 60], 'div-gpt-ad-1539008685004-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<div id="cnblogs_c2" class="c_ad_block">
+    <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+    <script>
+    if (new Date() >= new Date(2018, 9, 13)) {
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1539008685004-0'); });
+    }
+    </script>
+    <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" src="./tornado SSL 证书获取与服务器配置 - 严北 - 博客园_files/saved_resource.html"></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="https://kb.cnblogs.com/page/606682/" target="_blank">为什么说 Java 程序员必须掌握 Spring Boot ？</a><br> ·  <a href="https://kb.cnblogs.com/page/606645/" target="_blank">在学习中，有一个比掌握知识更重要的能力</a><br> ·  <a href="https://kb.cnblogs.com/page/603663/" target="_blank">如何招到一个靠谱的程序员</a><br> ·  <a href="https://kb.cnblogs.com/page/573614/" target="_blank">一个故事看懂“区块链”</a><br> ·  <a href="https://kb.cnblogs.com/page/603697/" target="_blank">被踢出去的用户</a><br></div>» <a href="https://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news">欢迎搜索微信公众号：devintest，获取测试开发实践经验教程！<div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/ityoung/">严北</a><br>园龄：<a href="https://home.cnblogs.com/u/ityoung/" title="入园时间：2014-11-28">3年10个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/ityoung/followers/">3</a><br>关注：<a href="https://home.cnblogs.com/u/ityoung/followees/">1</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;9569d9bc-0377-e411-b908-9dcfd8948a71&#39;)">+加关注</a></div><script>getFollowStatus('9569d9bc-0377-e411-b908-9dcfd8948a71')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/09/01&#39;);return false;">&lt;</a></td><td align="center">2018年10月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/11/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">30</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td class="CalWeekendDay" align="center">6</td></tr><tr><td class="CalWeekendDay" align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td class="CalWeekendDay" align="center">13</td></tr><tr><td class="CalWeekendDay" align="center">14</td><td class="CalTodayDay" align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td class="CalWeekendDay" align="center">20</td></tr><tr><td class="CalWeekendDay" align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td class="CalWeekendDay" align="center">27</td></tr><tr><td class="CalWeekendDay" align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td></tr><tr><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td><td class="CalOtherMonthDay" align="center">10</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/ityoung/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="https://www.cnblogs.com/ityoung/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="https://www.cnblogs.com/ityoung/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="https://www.cnblogs.com/ityoung/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="https://www.cnblogs.com/ityoung/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/ityoung/tag/Python/">Python</a>(6)</li><li><a href="https://www.cnblogs.com/ityoung/tag/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>(3)</li><li><a href="https://www.cnblogs.com/ityoung/tag/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">软件测试</a>(2)</li><li><a href="https://www.cnblogs.com/ityoung/tag/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>(2)</li><li><a href="https://www.cnblogs.com/ityoung/tag/RFS/">RFS</a>(2)</li><li><a href="https://www.cnblogs.com/ityoung/tag/Jenkins/">Jenkins</a>(2)</li><li><a href="https://www.cnblogs.com/ityoung/tag/Linux/">Linux</a>(2)</li><li><a href="https://www.cnblogs.com/ityoung/tag/ADB/">ADB</a>(1)</li><li><a href="https://www.cnblogs.com/ityoung/tag/LeetCode/">LeetCode</a>(1)</li><li><a href="https://www.cnblogs.com/ityoung/tag/Tornado/">Tornado</a>(1)</li><li><a href="https://www.cnblogs.com/ityoung/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/ityoung/category/817268.html">apptesting(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/ityoung/category/934993.html">CI(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/ityoung/category/817269.html">leetcode(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="https://www.cnblogs.com/ityoung/category/817270.html">python(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="https://www.cnblogs.com/ityoung/category/933880.html">RobotFramework(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="https://www.cnblogs.com/ityoung/category/1148883.html">tornado(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="https://www.cnblogs.com/ityoung/category/915578.html">Virtual Machine(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="https://www.cnblogs.com/ityoung/archive/2018/02.html">2018年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="https://www.cnblogs.com/ityoung/archive/2018/01.html">2018年1月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="https://www.cnblogs.com/ityoung/archive/2017/03.html">2017年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="https://www.cnblogs.com/ityoung/archive/2017/02.html">2017年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="https://www.cnblogs.com/ityoung/archive/2017/01.html">2017年1月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="https://www.cnblogs.com/ityoung/archive/2016/11.html">2016年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="https://www.cnblogs.com/ityoung/archive/2016/05.html">2016年5月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="https://www.cnblogs.com/ityoung/archive/2016/04.html">2016年4月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="https://www.cnblogs.com/ityoung/archive/2016/03.html">2016年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="https://www.cnblogs.com/ityoung/archive/2016/02.html">2016年2月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlecategory" class="catListArticleCategory sidebar-block">
+<h3 class="catListTitle">文章分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="https://www.cnblogs.com/ityoung/category/718297.html">loadrunner(1)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_1" href="https://www.cnblogs.com/ityoung/category/800083.html">python3 learning(2)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_2" href="https://www.cnblogs.com/ityoung/category/635669.html">Ubuntu(4)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_3" href="https://www.cnblogs.com/ityoung/category/703603.html">计算机网络(2)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_4" href="https://www.cnblogs.com/ityoung/category/791425.html">移动app测试</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_links1165431" class="catList sidebar-block">
+<h3 class="catListTitle">学习资源</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_3_Link_0" href="https://docs.python.org/3.5/" rel="nofollow">Python3.5官方文档</a> </li>
+
+<li><a id="CatList_LinkList_3_Link_1" href="https://stackoverflow.com/" rel="nofollow">StackOverFlow</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" style="display: none;">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"></div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/ityoung/p/5404051.html">1. adb工具获取appPackage和appActivity(1409)</a></li><li><a href="https://www.cnblogs.com/ityoung/p/6489158.html">2. Jenkins-Dingding Notification Plugin 配置(1038)</a></li><li><a href="https://www.cnblogs.com/ityoung/p/8296088.html">3. tornado SSL 证书获取与服务器配置(741)</a></li><li><a href="https://www.cnblogs.com/ityoung/p/6256169.html">4. Ubuntu安装RobotFramework(679)</a></li><li><a href="https://www.cnblogs.com/ityoung/p/6264460.html">5. Jenkins+Gitlab CE+Robot Framework持续集成(465)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap" style="display: none;">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap" style="display: none;">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 严北
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>
